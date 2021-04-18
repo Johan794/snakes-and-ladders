@@ -12,6 +12,7 @@ public class Main {
         game = new SnakesAndLaddersGame();
     }
     public static void main(String[] args) {
-        System.out.println("Este es el inicio de una nueva TI");
+        //TODO: hacer menu para el usuario
+        //TODO: imprimir el tablero para el usuario
     }
 }

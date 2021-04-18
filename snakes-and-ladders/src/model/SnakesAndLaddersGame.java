@@ -4,9 +4,9 @@ public class SnakesAndLaddersGame {
     private Box board;
     private int players;
     private int boardSize;
-     //TODO: verificar las condieciones de inicio o fin de una serpiente o escalera
+     //TODO: verificar las condiciones de inicio o fin de una serpiente o escalera
+    //TODO: hacer metodo para el avanze del juego
     public SnakesAndLaddersGame() {
-
 
     }
 
@@ -32,6 +32,7 @@ public class SnakesAndLaddersGame {
         if (position == boardSize){
             Box aux = findLast(board);
             Box last = new Box(position);
+            last.setGameItem(GameObject.NONE);
             aux.setNext(last); //caso base
         }else if(position == 1){
             board = new Box(add);
