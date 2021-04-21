@@ -2,33 +2,54 @@ package model;
 
 public class SnakesAndLaddersGame {
     private Box board;
-    private int players;
     private int boardSize;
-     //TODO: verificar las condiciones de inicio o fin de una serpiente o escalera
+    private int currentSnakes;
+    private int currentLadders;
+     //TODO: verificar condiciones para inicio o fin de serpiente y escalera
+    //TODO: verificar que no hayan inicio-fin en la misma fila
     //TODO: hacer metodo para el avanze del juego
     public SnakesAndLaddersGame() {
 
     }
 
-    public void startGame(int n , int m, String inputs){
-        setPlayers(inputs.length());
+    public void startGame(int n , int m, int snakes, int ladders ){
         setBoardSize(n*m);
+        setCurrentSnakes(snakes);
+        setCurrentLadders(ladders);
         int position =1;
-        crateBoard(position);
+        crateBoard(position, 0, 0);
 
     }
 
 
-    public void crateBoard(int position){
-        int itemToadd= (int) (Math.random() * 3)+1;
-        String add;
-        switch (itemToadd){
-            case 1 : add = "SNAKE";
-                break;
-            case 2: add = "LADDER";
-                break;
-            default: add = "NONE";
+
+    public void crateBoard(int position, int createdSnakes , int createdLadders){
+        int itemToadd= (int) (Math.random() * 5)+1;
+        String add="NONE";
+        if(!(createdLadders==currentLadders) || !(createdSnakes==currentSnakes)){
+            switch (itemToadd){
+                case 1 : if(!(createdLadders==currentLadders)){
+                                 add = "HEAD";
+                                createdSnakes+=1;
+                }
+                    break;
+
+                case 2: if(!(createdLadders==currentLadders)) {
+                    add = "TAIL";
+                    createdLadders +=1;
+                }
+                case 3: if(!(createdLadders==currentLadders)){
+                    add = "BASE";
+                    createdSnakes+=1;
+                }
+                    break;
+                case 4: if(!(createdLadders==currentLadders)) {
+                    add = "TOP";
+                    createdLadders +=1;
+                }break;
+            }
         }
+
         if (position == boardSize){
             Box aux = findLast(board);
             Box last = new Box(position);
@@ -36,7 +57,7 @@ public class SnakesAndLaddersGame {
             aux.setNext(last); //caso base
         }else if(position == 1){
             board = new Box(add);
-            crateBoard(position+1);
+            crateBoard(position+1,createdSnakes,createdLadders);
         }else{
             if(board.getNext()==null){
                 board.setNext(new Box(add,position));
@@ -44,7 +65,7 @@ public class SnakesAndLaddersGame {
                 Box aux = findLast(board);
                 aux.setNext(new Box(add,position));
             }
-            crateBoard(position+1);
+            crateBoard(position+1,createdSnakes,createdLadders);
         }
     }
 
@@ -59,13 +80,12 @@ public class SnakesAndLaddersGame {
 
     }
 
+    public void setCurrentSnakes(int currentSnakes) {
+        this.currentSnakes = currentSnakes;
+    }
 
-
-
-
-
-    public void setPlayers(int players) {
-        this.players = players;
+    public void setCurrentLadders(int currentLadders) {
+        this.currentLadders = currentLadders;
     }
 
     public void setBoardSize(int boardSize) {

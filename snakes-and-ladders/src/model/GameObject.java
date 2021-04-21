@@ -1,5 +1,5 @@
 package model;
 
 public enum GameObject {
-    SNAKE , LADDER , NONE
+    HEAD ,TAIL,BASE,TOP, NONE
 }
