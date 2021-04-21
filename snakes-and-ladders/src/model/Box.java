@@ -8,6 +8,7 @@ public class Box {
     private boolean isFirst;
 
     private Box next;
+    private Box previous;
 
     public Box(String item) {
         if(item.equals("LADDER")){
@@ -82,5 +83,11 @@ public class Box {
         this.next = next;
     }
 
+    public Box getPrevious() {
+        return previous;
+    }
 
+    public void setPrevious(Box previous) {
+        this.previous = previous;
+    }
 }
