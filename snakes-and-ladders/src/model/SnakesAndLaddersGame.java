@@ -24,29 +24,27 @@ public class SnakesAndLaddersGame {
 
 
     public void crateBoard(int position, int createdSnakes , int createdLadders){
-        int itemToadd= (int) (Math.random() * 5)+1;
+        int itemToadd= (int) (Math.random() * 4)+1;
         String add="NONE";
         if(!(createdLadders==currentLadders) || !(createdSnakes==currentSnakes)){
             switch (itemToadd){
                 case 1 : if(!(createdLadders==currentLadders)){
                                  add = "HEAD";
                                 createdSnakes+=1;
-                }
-                    break;
-
+                } break;
                 case 2: if(!(createdLadders==currentLadders)) {
                     add = "TAIL";
                     createdLadders +=1;
-                }
+                } break;
                 case 3: if(!(createdLadders==currentLadders)){
                     add = "BASE";
                     createdSnakes+=1;
-                }
-                    break;
+                } break;
                 case 4: if(!(createdLadders==currentLadders)) {
                     add = "TOP";
                     createdLadders +=1;
                 }break;
+                default: add = "NONE";
             }
         }
 
