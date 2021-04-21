@@ -2,7 +2,7 @@ package model;
 
 public class Box {
     private GameObject gameItem;
-    private String player;
+    private char player;
     private int position;
     private boolean islast;
     private boolean isFirst;
@@ -42,11 +42,11 @@ public class Box {
         this.gameItem = gameItem;
     }
 
-    public String getPlayer() {
+    public char getPlayer() {
         return player;
     }
 
-    public void setPlayer(String player) {
+    public void setPlayer(char player) {
         this.player = player;
     }
 

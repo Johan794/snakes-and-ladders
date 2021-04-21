@@ -73,7 +73,6 @@ public class SnakesAndLaddersGame {
             last = last.getNext();
             findLast(last);
         }
-
         return last;
 
     }
