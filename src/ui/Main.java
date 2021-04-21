@@ -1,8 +1,4 @@
 package ui;
-import model.SnakesAndLaddersGame;
-
-import java.util.Scanner;
-
 public class Main {
 
     Menu theMenu;
