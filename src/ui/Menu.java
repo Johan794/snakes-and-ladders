@@ -1,5 +1,6 @@
 package ui;
 
+import model.Box;
 import model.SnakesAndLaddersGame;
 
 import java.util.Scanner;
@@ -46,11 +47,10 @@ public class Menu {
       return out;
     }
 
-    private String printRows(int rows){
-        return "";
-    }
-
-    private String printColumns(int columns){
-        return "";
+    private String printRows(int rows, int i, String out, Box first){
+        if(i!=rows){
+          out+="";
+        }
+        return out;
     }
 }

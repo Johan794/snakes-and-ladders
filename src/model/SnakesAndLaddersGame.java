@@ -1,14 +1,15 @@
 package model;
 
+
 public class SnakesAndLaddersGame {
     private Box board;
     private int boardSize;
     private int currentSnakes;
     private int currentLadders;
+    private int rows;
+    private int columns;
     private Score rootScore;
-     //TODO: verificar condiciones para inicio o fin de serpiente y escalera
-    //TODO: verificar que no hayan inicio-fin en la misma fila
-    //TODO: hacer metodo para el avanze del juego
+    //TODO: hacer metodo para el avanze del juego - Camilo
     public SnakesAndLaddersGame() {
 
     }
@@ -19,6 +20,10 @@ public class SnakesAndLaddersGame {
         setCurrentLadders(ladders);
         int position =1;
         crateBoard(position, 0, 0);
+        Box current = findLast(board);
+        current = current.getPrevious();
+        connectSnakes(snakes,current);
+        connectLadders(ladders,board,current);
 
     }
 
@@ -56,7 +61,7 @@ public class SnakesAndLaddersGame {
             aux.setNext(last); //caso base
             last.setPrevious(aux);
         }else if(position == 1){
-            board = new Box(add);
+            board = new Box();
             crateBoard(position+1,createdSnakes,createdLadders);
         }else{
             if(board.getNext()==null){
@@ -70,6 +75,65 @@ public class SnakesAndLaddersGame {
             crateBoard(position+1,createdSnakes,createdLadders);
         }
     }
+
+    public void connectSnakes(int currentSnakes,Box current){
+        if(currentSnakes!=0 && current!=null){
+            if(current.getGameItem().equals(GameItem.HEAD)){
+                Snake newSnake = new Snake();
+                current.setSnake(newSnake);
+                newSnake.setHead(current);
+                newSnake.setTail(findTail(board));
+                connectSnakes(currentSnakes-1,current.getPrevious());
+            }else{
+                connectSnakes(currentSnakes,current.getPrevious());
+            }
+
+        }
+
+    }
+
+    //encuentra la primera cola de serpiente
+    private Box findTail(Box board){
+        Box tail =null;
+        if(board!=null){
+            if (board.getGameItem().equals(GameItem.TAIL)){
+                tail = board;
+
+            }else{
+                findTail(board.getNext());
+            }
+        }
+
+        return tail;
+    }
+
+    public void connectLadders(int currentLadders , Box current, Box last){
+        if(currentLadders!=0 && current!=null){
+            if(current.getGameItem().equals(GameItem.BASE)){
+                Ladder newLadder = new Ladder();
+                newLadder.setBase(current);
+                newLadder.setTop(findTop(last));
+                current.setLadder(newLadder);
+                connectLadders(currentLadders-1,current.getNext(),last);
+            }else {
+                connectLadders(currentLadders,current.getNext(),last);
+            }
+        }
+
+    }
+
+    private Box findTop(Box current){
+        Box top = null;
+        if(current!=null){
+            if(current.getGameItem().equals(GameItem.TOP)){
+                top=current;
+            }else{
+               findTop(current.getPrevious());
+            }
+        }
+        return top;
+    }
+
 
     public Box findLast(Box board){
         Box last = board;
