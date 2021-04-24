@@ -17,11 +17,6 @@ public class Main {
 
     public static void main(String[] args) {
         Main ppal= new Main();
-
-        //TODO: imprimir el tablero para el usuario
-
-
-
     }
 
 

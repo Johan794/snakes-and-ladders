@@ -1,21 +1,19 @@
 package model;
 
 public class Box {
-    private GameObject gameItem;
+    private GameItem gameItem;
     private char player;
     private int position;
     private boolean islast;
     private boolean isFirst;
+    private Snake snake;
+    private Ladder ladder;
 
     private Box next;
     private Box previous;
 
-    public Box(String item) {
-        if(item.equals("LADDER")){
-            gameItem = GameObject.NONE;
-        }else{
-            gameItem = GameObject.valueOf(item);
-        }
+    public Box() {
+        gameItem = GameItem.NONE;
         isFirst = true;
         islast = false;
         position = 1;
@@ -28,19 +26,27 @@ public class Box {
     }
 
     public Box(String item , int position){
-        gameItem = GameObject.valueOf(item);
+        gameItem = GameItem.valueOf(item);
         isFirst = false;
         islast = false;
         this.position = position;
 
     }
 
-    public GameObject getGameItem() {
-        return gameItem;
+    public Snake getSnake() {
+        return snake;
     }
 
-    public void setGameItem(GameObject gameItem) {
-        this.gameItem = gameItem;
+    public void setSnake(Snake snake) {
+        this.snake = snake;
+    }
+
+    public Ladder getLadder() {
+        return ladder;
+    }
+
+    public void setLadder(Ladder ladder) {
+        this.ladder = ladder;
     }
 
     public char getPlayer() {
@@ -89,5 +95,13 @@ public class Box {
 
     public void setPrevious(Box previous) {
         this.previous = previous;
+    }
+
+    public GameItem getGameItem() {
+        return gameItem;
+    }
+
+    public void setGameItem(GameItem gameItem) {
+        this.gameItem = gameItem;
     }
 }

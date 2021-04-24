@@ -1,5 +1,5 @@
 package model;
 
-public enum GameObject {
+public enum GameItem {
     HEAD ,TAIL,BASE,TOP, NONE
 }
