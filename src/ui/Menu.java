@@ -19,10 +19,9 @@ public class Menu {
             case 1:
                 playGame();
                 myMenu();
-
                 break;
             case 2:
-                //TODO: Crear el metodo para mostrar el tablero
+                System.out.println(seeBoard(game.getRows(),game.getColumns()));
                 myMenu();
                 break;
             case 3:
@@ -33,7 +32,25 @@ public class Menu {
     }
 
     public void playGame(){
-        //TODO: Hacer el metodo, unirlo con model.
-        //Un submenu dado que el jugador tendra opciones.
+        //game.startGame();
+        //TODO: Hacer el metodo, unirlo con model - Camilo
+        //TODO Un submenu dado que el jugador tendra opciones. -Camilo
+
+
+    }
+
+    public String seeBoard(int rows , int columns){
+      String out ="";
+
+
+      return out;
+    }
+
+    private String printRows(int rows){
+        return "";
+    }
+
+    private String printColumns(int columns){
+        return "";
     }
 }

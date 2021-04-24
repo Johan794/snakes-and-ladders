@@ -52,7 +52,7 @@ public class SnakesAndLaddersGame {
         if (position == boardSize){
             Box aux = findLast(board);
             Box last = new Box(position);
-            last.setGameItem(GameObject.NONE);
+            last.setGameItem(GameItem.NONE);
             aux.setNext(last); //caso base
             last.setPrevious(aux);
         }else if(position == 1){
@@ -81,6 +81,23 @@ public class SnakesAndLaddersGame {
 
     }
 
+    public int getColumns() {
+        return columns;
+    }
+
+    public void setColumns(int columns) {
+        this.columns = columns;
+    }
+
+    public int getRows() {
+        return rows;
+    }
+
+
+    public void setRows(int rows) {
+        this.rows = rows;
+    }
+
     public void setCurrentSnakes(int currentSnakes) {
         this.currentSnakes = currentSnakes;
     }
@@ -91,5 +108,29 @@ public class SnakesAndLaddersGame {
 
     public void setBoardSize(int boardSize) {
         this.boardSize = boardSize;
+    }
+
+    public Box getBoard() {
+        return board;
+    }
+
+    public int getBoardSize() {
+        return boardSize;
+    }
+
+    public int getCurrentSnakes() {
+        return currentSnakes;
+    }
+
+    public int getCurrentLadders() {
+        return currentLadders;
+    }
+
+    public Score getRootScore() {
+        return rootScore;
+    }
+
+    public void setRootScore(Score rootScore) {
+        this.rootScore = rootScore;
     }
 }

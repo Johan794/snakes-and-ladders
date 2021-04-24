@@ -1,7 +1,8 @@
 package model;
 
 public class Box {
-    private GameObject gameItem;
+    //private GameItem gameItem;
+    private GameObject gameObject;
     private char player;
     private int position;
     private boolean islast;
@@ -11,11 +12,13 @@ public class Box {
     private Box previous;
 
     public Box(String item) {
+        GameItem gameItem;
         if(item.equals("LADDER")){
-            gameItem = GameObject.NONE;
+            gameItem = GameItem.NONE;
         }else{
-            gameItem = GameObject.valueOf(item);
+            gameItem = GameItem.valueOf(item);
         }
+        setGameObject(gameItem);
         isFirst = true;
         islast = false;
         position = 1;
@@ -28,20 +31,22 @@ public class Box {
     }
 
     public Box(String item , int position){
-        gameItem = GameObject.valueOf(item);
+        GameItem gameItem = GameItem.valueOf(item);
+        setGameObject(gameItem);
         isFirst = false;
         islast = false;
         this.position = position;
 
     }
 
-    public GameObject getGameItem() {
-        return gameItem;
+    public GameObject getGameObject() {
+        return gameObject;
     }
 
-    public void setGameItem(GameObject gameItem) {
-        this.gameItem = gameItem;
+    public void setGameObject(GameItem gameItem) {
+        gameObject = new GameObject(gameItem);
     }
+
 
     public char getPlayer() {
         return player;
