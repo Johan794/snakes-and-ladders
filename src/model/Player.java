@@ -1,10 +1,10 @@
 package model;
 
-public class Score {
+public class Player {
     private int playerScore;
     private String player;
 
-    public Score(int playerScore, String player) {
+    public Player(int playerScore, String player) {
         this.playerScore = playerScore;
         this.player = player;
     }

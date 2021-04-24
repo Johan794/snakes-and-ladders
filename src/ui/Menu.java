@@ -41,6 +41,7 @@ public class Menu {
     }
 
     public String seeBoard(int rows , int columns){
+<<<<<<< HEAD
       String out ="";
 
 
@@ -52,5 +53,27 @@ public class Menu {
           out+="";
         }
         return out;
+=======
+        return seeBoard(columns,rows*columns,0,"",game.getLastBox());
+>>>>>>> 4594a1d655f6bc74877b8a502e864ea4980ff6de
     }
+
+    //TODO: alta que imprima las serpientes y escaleras - Johan
+    private String seeBoard(int cols, int i, int lineBreak,String out, Box last){
+        if(i==1){
+            out+= "["+i+"]";
+            return out;
+        }else{
+            if(lineBreak!=cols){
+                out+= "["+i+"]"+" ";
+                return seeBoard(cols,i-1,lineBreak+1,out,last);
+            }else{
+                out+="\n";
+                lineBreak =0;
+                return seeBoard(cols,i-1,lineBreak,out,last);
+            }
+        }
+    }
+
+
 }
