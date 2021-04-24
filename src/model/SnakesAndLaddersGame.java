@@ -9,7 +9,10 @@ public class SnakesAndLaddersGame {
     private int currentLadders;
     private int rows;
     private int columns;
-    private Score rootScore;
+    public static final String SNAKES = "ABCDEFGHIJHKLNOPQRSRWXYZ";
+    //public static final String LADDERS = "1234567890";
+
+    private Player rootPlayer;
     //TODO: hacer metodo para el avanze del juego - Camilo
     public SnakesAndLaddersGame() {
 
@@ -23,8 +26,8 @@ public class SnakesAndLaddersGame {
         crateBoard(position, 0, 0);
         Box current = findLast(board);
         current = current.getPrevious();
-        connectSnakes(snakes,current);
-        connectLadders(ladders,board,current);
+        connectSnakes(snakes,current,0);
+        connectLadders(ladders,board,current,1);
 
     }
 
@@ -77,16 +80,19 @@ public class SnakesAndLaddersGame {
         }
     }
 
-    public void connectSnakes(int currentSnakes,Box current){
+    public void connectSnakes(int currentSnakes,Box current, int symbolIndex){
         if(currentSnakes!=0 && current!=null){
             if(current.getGameItem().equals(GameItem.HEAD)){
                 Snake newSnake = new Snake();
                 current.setSnake(newSnake);
+                current.setItemSymbol(SNAKES.charAt(symbolIndex));
                 newSnake.setHead(current);
-                newSnake.setTail(findTail(board));
-                connectSnakes(currentSnakes-1,current.getPrevious());
+                Box tail = findTail(board);
+                tail.setItemSymbol(SNAKES.charAt(symbolIndex));
+                newSnake.setTail(tail);
+                connectSnakes(currentSnakes-1,current.getPrevious(), symbolIndex+1);
             }else{
-                connectSnakes(currentSnakes,current.getPrevious());
+                connectSnakes(currentSnakes,current.getPrevious(),symbolIndex);
             }
 
         }
@@ -108,16 +114,19 @@ public class SnakesAndLaddersGame {
         return tail;
     }
 
-    public void connectLadders(int currentLadders , Box current, Box last){
+    public void connectLadders(int currentLadders , Box current, Box last, int symbolIndex){
         if(currentLadders!=0 && current!=null){
             if(current.getGameItem().equals(GameItem.BASE)){
                 Ladder newLadder = new Ladder();
                 newLadder.setBase(current);
-                newLadder.setTop(findTop(last));
+                Box top = findTop(last);
+                newLadder.setTop(top);
                 current.setLadder(newLadder);
-                connectLadders(currentLadders-1,current.getNext(),last);
+                current.setItemSymbol((char) symbolIndex);
+                top.setItemSymbol((char) symbolIndex);
+                connectLadders(currentLadders-1,current.getNext(),last, symbolIndex+1);
             }else {
-                connectLadders(currentLadders,current.getNext(),last);
+                connectLadders(currentLadders,current.getNext(),last, symbolIndex);
             }
         }
 
@@ -196,11 +205,11 @@ public class SnakesAndLaddersGame {
     }
 
 
-    public Score getRootScore() {
-        return rootScore;
+    public Player getRootScore() {
+        return rootPlayer;
     }
 
-    public void setRootScore(Score rootScore) {
-        this.rootScore = rootScore;
+    public void setRootScore(Player rootPlayer) {
+        this.rootPlayer = rootPlayer;
     }
 }

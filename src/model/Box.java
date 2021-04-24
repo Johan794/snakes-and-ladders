@@ -1,13 +1,15 @@
 package model;
 
 public class Box {
-    private GameItem gameItem;
     private char player;
     private int position;
     private boolean islast;
     private boolean isFirst;
+    private char itemSymbol;
+
     private Snake snake;
     private Ladder ladder;
+    private GameItem gameItem;
 
     private Box next;
     private Box previous;
@@ -17,12 +19,16 @@ public class Box {
         isFirst = true;
         islast = false;
         position = 1;
+        itemSymbol =' ';
+        player = ' ';
     }
     //el ultimo cuadro se le debe hacer set al item
     public Box(int position){
         isFirst = false;
         islast = true;
         this.position = position;
+        itemSymbol =' ';
+        player = ' ';
     }
 
     public Box(String item , int position){
@@ -30,6 +36,8 @@ public class Box {
         isFirst = false;
         islast = false;
         this.position = position;
+        itemSymbol =' ';
+        player = ' ';
 
     }
 
@@ -45,8 +53,8 @@ public class Box {
         return ladder;
     }
 
-    public void setLadder(Ladder ladder) {
-        this.ladder = ladder;
+    public void setLadder(Ladder newLadder) {
+        ladder = newLadder;
     }
 
     public char getPlayer() {
@@ -103,5 +111,13 @@ public class Box {
 
     public void setGameItem(GameItem gameItem) {
         this.gameItem = gameItem;
+    }
+
+    public char getItemSymbol() {
+        return itemSymbol;
+    }
+
+    public void setItemSymbol(char itemSymbol) {
+        this.itemSymbol = itemSymbol;
     }
 }

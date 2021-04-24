@@ -6,10 +6,14 @@ import model.SnakesAndLaddersGame;
 import java.util.Scanner;
 
 public class Menu {
-    Scanner sc = new Scanner(System.in);
-    SnakesAndLaddersGame game = new SnakesAndLaddersGame();
-
+     private Scanner sc;
+     private SnakesAndLaddersGame game;
+    public static final String ANSI_RED = "\u001B[31m"; //para las serpientes
+    public static final String ANSI_GREEN = "\u001B[32m"; //para las escaleras
+    public static final String ANSI_RESET = "\u001B[0m"; //para que solo el char quede con el color
     public Menu() {
+        game = new SnakesAndLaddersGame();
+        sc = new Scanner(System.in);
         myMenu();
     }
 
@@ -34,29 +38,47 @@ public class Menu {
 
     public void playGame(){
         //game.startGame();
-        //TODO: Hacer el metodo, unirlo con model - Camilo
         //TODO Un submenu dado que el jugador tendra opciones. -Camilo
 
 
     }
 
     public String seeBoard(int rows , int columns){
-        return seeBoard(columns,rows*columns,0,"",game.getLastBox());
+        return seeBoard(columns,rows*columns,1,"",game.getLastBox());
     }
 
-    //TODO: alta que imprima las serpientes y escaleras - Johan
     private String seeBoard(int cols, int i, int lineBreak,String out, Box last){
         if(i==1){
-            out+= "["+i+"]";
+            out+= "["+i+last.getItemSymbol()+' '+last.getPlayer()+"]";
             return out;
         }else{
             if(lineBreak!=cols){
-                out+= "["+i+"]"+" ";
-                return seeBoard(cols,i-1,lineBreak+1,out,last);
+                if(Character.isDigit(last.getItemSymbol())){
+                    out+= "["+i+ANSI_GREEN+last.getItemSymbol()+ANSI_RESET+' '+last.getPlayer()+"]"+" ";
+                    return seeBoard(cols,i-1,lineBreak+1,out,last.getPrevious());
+                }else if(last.getItemSymbol()!=' '){
+                    out+= "["+i+ANSI_RED+last.getItemSymbol()+ANSI_RESET+' '+last.getPlayer()+"]"+" ";
+                    return seeBoard(cols,i-1,lineBreak+1,out,last.getPrevious());
+                }else {
+                    out+= "["+i+last.getItemSymbol()+' '+last.getPlayer()+"]"+" ";
+                    return seeBoard(cols,i-1,lineBreak+1,out,last.getPrevious());
+                }
+
             }else{
-                out+="\n";
-                lineBreak =0;
-                return seeBoard(cols,i-1,lineBreak,out,last);
+                if(Character.isDigit(last.getItemSymbol())){
+                    out+= "["+i+ANSI_GREEN+last.getItemSymbol()+ANSI_RESET+' '+last.getPlayer()+"]"+"\n";
+                    lineBreak =1;
+                    return seeBoard(cols,i-1,lineBreak,out,last.getPrevious());
+                }else if(last.getItemSymbol()!=' '){
+                    out+= "["+i+ANSI_RED+last.getItemSymbol()+ANSI_RESET+' '+last.getPlayer()+"]"+"\n";
+                    lineBreak =1;
+                    return seeBoard(cols,i-1,lineBreak,out,last.getPrevious());
+                }else {
+                    out+= "["+i+last.getItemSymbol()+' '+last.getPlayer()+"]"+"\n";
+                    lineBreak =1;
+                    return seeBoard(cols,i-1,lineBreak,out,last.getPrevious());
+                }
+
             }
         }
     }
