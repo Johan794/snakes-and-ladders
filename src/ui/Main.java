@@ -9,8 +9,8 @@ public class Main {
 
     public void welcome(){
         System.out.println("-----------------------------------------");
-        System.out.println("          Welcome To              ");
-        System.out.println("        Snakes And Ladders Game        ");
+        System.out.println("               Welcome To                ");
+        System.out.println("         Snakes And Ladders Game         ");
         System.out.println("-----------------------------------------");
 
 

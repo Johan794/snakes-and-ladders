@@ -18,67 +18,148 @@ public class SnakesAndLaddersGame {
 
     }
 
-    public void startGame(int n , int m, int snakes, int ladders ){
+    public void startGame(int n , int m, int snakes, int ladders){
         setBoardSize(n*m);
         setCurrentSnakes(snakes);
         setCurrentLadders(ladders);
         int position =1;
-        crateBoard(position, 0, 0);
-        Box current = findLast(board);
-        current = current.getPrevious();
+        createBoard(position);
+        setSnakes(0);
+        setLadders(0);
+        setLastBox(findLast(board));
+        Box current = lastBox;
+        //current = current.getPrevious();
         connectSnakes(snakes,current,0);
         connectLadders(ladders,board,current,1);
+        setRows(n);
+        setColumns(m);
+
 
     }
 
 
 
-    public void crateBoard(int position, int createdSnakes , int createdLadders){
-        int itemToadd= (int) (Math.random() * 4)+1;
-        String add="NONE";
-        if(!(createdLadders==currentLadders) || !(createdSnakes==currentSnakes)){
-            switch (itemToadd){
-                case 1 : if(!(createdLadders==currentLadders)){
-                                 add = "HEAD";
-                                createdSnakes+=1;
-                } break;
-                case 2: if(!(createdLadders==currentLadders)) {
-                    add = "TAIL";
-                    createdLadders +=1;
-                } break;
-                case 3: if(!(createdLadders==currentLadders)){
-                    add = "BASE";
-                    createdSnakes+=1;
-                } break;
-                case 4: if(!(createdLadders==currentLadders)) {
-                    add = "TOP";
-                    createdLadders +=1;
-                }break;
-                default: add = "NONE";
-            }
-        }
-
+    public void createBoard(int position){
         if (position == boardSize){
             Box aux = findLast(board);
             Box last = new Box(position);
             last.setGameItem(GameItem.NONE);
             aux.setNext(last); //caso base
             last.setPrevious(aux);
+            last.setIslast(true);
         }else if(position == 1){
             board = new Box();
-            crateBoard(position+1,createdSnakes,createdLadders);
+            createBoard(position+1);
         }else{
             if(board.getNext()==null){
-                board.setNext(new Box(add,position));
+                board.setNext(new Box(position));
+                board.getNext().setGameItem(GameItem.NONE);
+                board.getNext().setPrevious(board);
+
             }else{
                 Box aux = findLast(board);
-                Box newBox =new Box(add,position);
+                Box newBox =new Box(position);
                 aux.setNext(newBox);
                 newBox.setPrevious(aux);
+                newBox.setGameItem(GameItem.NONE);
+
             }
-            crateBoard(position+1,createdSnakes,createdLadders);
+            createBoard(position+1);
         }
     }
+
+    public void setSnakes(int createdSnakes){
+
+        if(((currentSnakes*2)!=createdSnakes)){
+            int number = (int)((Math.random()*2)+1);
+           //System.out.println("numero"+number);
+            int position = (int)((Math.random())*boardSize)+1;
+            //System.out.println("position"+position);
+            String add = "NONE";
+
+            switch (number) {
+                case 1:
+                    add = "HEAD";
+                    createdSnakes += 1;
+                    break;
+                case 2:
+                    add = "TAIL";
+                    createdSnakes += 1;
+                    break;
+            }
+
+            Box newBox = search(position);
+            if(!(newBox.isFirst()) || !(newBox.isIslast())){
+                System.out.println(newBox.getPosition()+" Tiene "+add);
+                newBox.setGameItem(GameItem.valueOf(add));
+            }
+
+            setSnakes(createdSnakes);
+
+        }
+
+    }
+
+    public void setLadders(int createdLadders){
+
+        if(((currentLadders*2)!=createdLadders)){
+            int number = (int)((Math.random()*2)+1);
+          //System.out.println("numero"+number);
+            int position = (int)((Math.random())*boardSize)+1;
+            //System.out.println("position"+position);
+            String add = "NONE";
+
+            switch (number) {
+                case 1:
+                    add = "TOP";
+                    createdLadders += 1;
+                    break;
+                case 2:
+                    add = "BASE";
+                    createdLadders += 1;
+                    break;
+            }
+
+            Box newBox = search(position);
+            if(!(newBox.isFirst()) || !(newBox.isIslast())){
+                System.out.println(newBox.getPosition()+" Tiene "+add);
+                newBox.setGameItem(GameItem.valueOf(add));
+            }
+
+            setLadders(createdLadders);
+
+        }
+
+    }
+
+
+    public Box search(int position){
+        System.out.println("la que se busca pri "+position);
+          return search(board,position);
+    }
+
+    private Box search(Box current,int position){
+        if((current != null) && (current.getPosition() == position)){
+            System.out.println("numero 1 "+current.getPosition());
+            return current;
+        } else{
+            System.out.println("numero 2: "+current.getPosition());
+            return search(current.getNext(),position);
+        }
+    }
+
+    /*public void trampa(){
+        Box n = board;
+        boolean out = false;
+        while(!out){
+            if(n.getNext() != null) {
+                System.out.println(board.getPosition());
+                n = n.getNext();
+            }else{
+                out = true;
+            }
+        }
+    }*/
 
     public void connectSnakes(int currentSnakes,Box current, int symbolIndex){
         if(currentSnakes!=0 && current!=null){
@@ -87,7 +168,7 @@ public class SnakesAndLaddersGame {
                 current.setSnake(newSnake);
                 current.setItemSymbol(SNAKES.charAt(symbolIndex));
                 newSnake.setHead(current);
-                Box tail = findTail(board);
+                Box tail = findTail(board,false);
                 tail.setItemSymbol(SNAKES.charAt(symbolIndex));
                 newSnake.setTail(tail);
                 connectSnakes(currentSnakes-1,current.getPrevious(), symbolIndex+1);
@@ -100,18 +181,15 @@ public class SnakesAndLaddersGame {
     }
 
     //encuentra la primera cola de serpiente
-    private Box findTail(Box board){
-        Box tail =null;
-        if(board!=null){
-            if (board.getGameItem().equals(GameItem.TAIL)){
-                tail = board;
-
+    private Box findTail(Box board, boolean out){
+        if(out!=true){
+            if(board.getGameItem().equals(GameItem.TAIL)){
+                return findTail(board,true);
             }else{
-                findTail(board.getNext());
+                return findTail(board.getNext(), out);
             }
         }
-
-        return tail;
+        return board;
     }
 
     public void connectLadders(int currentLadders , Box current, Box last, int symbolIndex){
@@ -119,7 +197,8 @@ public class SnakesAndLaddersGame {
             if(current.getGameItem().equals(GameItem.BASE)){
                 Ladder newLadder = new Ladder();
                 newLadder.setBase(current);
-                Box top = findTop(last);
+                System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"+last.getPosition());
+                Box top = findTop(last,false);
                 newLadder.setTop(top);
                 current.setLadder(newLadder);
                 current.setItemSymbol((char) symbolIndex);
@@ -132,27 +211,25 @@ public class SnakesAndLaddersGame {
 
     }
 
-    private Box findTop(Box current){
-        Box top = null;
-        if(current!=null){
-            if(current.getGameItem().equals(GameItem.TOP)){
-                top=current;
-            }else{
-               findTop(current.getPrevious());
+    private Box findTop(Box current, boolean out){
+        if(out!=true){
+            if((current != null) && (current.getGameItem().equals(GameItem.TOP))){
+                return findTop(current,true);
+            }else if(current!=null){
+                return findTop(current.getPrevious(), out);
             }
         }
-        return top;
+        return current;
     }
 
-
     public Box findLast(Box board){
-        Box last = board;
-        if(!(last.getNext()==null)){
-            last = last.getNext();
-            findLast(last);
+        if (board.getNext() != null) {
+            //System.out.println(board.getPosition());
+            return findLast(board.getNext());
+        } else{
+           // System.out.println(board.getPosition());
+            return board;
         }
-        return last;
-
     }
 
     public int getColumns() {
@@ -201,9 +278,13 @@ public class SnakesAndLaddersGame {
     }
 
     public Box getLastBox() {
+      //  System.out.println(lastBox.getPosition());
         return lastBox;
     }
 
+    public void setLastBox(Box lastBox){
+        this.lastBox = lastBox;
+    }
 
     public Player getRootScore() {
         return rootPlayer;
@@ -212,4 +293,7 @@ public class SnakesAndLaddersGame {
     public void setRootScore(Player rootPlayer) {
         this.rootPlayer = rootPlayer;
     }
+
+   // public String getPlayers(){ return  }
+
 }

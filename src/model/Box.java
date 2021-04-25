@@ -25,20 +25,10 @@ public class Box {
     //el ultimo cuadro se le debe hacer set al item
     public Box(int position){
         isFirst = false;
-        islast = true;
-        this.position = position;
-        itemSymbol =' ';
-        player = ' ';
-    }
-
-    public Box(String item , int position){
-        gameItem = GameItem.valueOf(item);
-        isFirst = false;
         islast = false;
         this.position = position;
         itemSymbol =' ';
         player = ' ';
-
     }
 
     public Snake getSnake() {
