@@ -5,7 +5,7 @@ public class Box {
     private int position;
     private boolean islast;
     private boolean isFirst;
-    private char itemSymbol;
+    private String itemSymbol;
 
     private Snake snake;
     private Ladder ladder;
@@ -19,7 +19,7 @@ public class Box {
         isFirst = true;
         islast = false;
         position = 1;
-        itemSymbol =' ';
+        itemSymbol ="";
         player = ' ';
     }
     //el ultimo cuadro se le debe hacer set al item
@@ -27,7 +27,7 @@ public class Box {
         isFirst = false;
         islast = false;
         this.position = position;
-        itemSymbol =' ';
+        itemSymbol ="";
         player = ' ';
     }
 
@@ -103,11 +103,23 @@ public class Box {
         this.gameItem = gameItem;
     }
 
-    public char getItemSymbol() {
+    public String getItemSymbol() {
         return itemSymbol;
     }
 
-    public void setItemSymbol(char itemSymbol) {
+    public void setItemSymbol(String itemSymbol) {
         this.itemSymbol = itemSymbol;
+    }
+
+    public boolean isnumeric(){
+        boolean out;
+        try {
+            Integer.parseInt(itemSymbol);
+            out = true;
+        }catch (NumberFormatException nm){
+          out = false;
+        }
+
+        return out;
     }
 }

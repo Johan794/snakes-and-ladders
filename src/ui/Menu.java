@@ -1,17 +1,16 @@
 package ui;
 
 import model.Box;
-import model.GameItem;
 import model.SnakesAndLaddersGame;
-
 import java.util.Scanner;
 
 public class Menu {
      private Scanner sc;
      private SnakesAndLaddersGame game;
-    public static final String ANSI_RED = "\u001B[31m"; //para las serpientes
-    public static final String ANSI_GREEN = "\u001B[32m"; //para las escaleras
+     public static final String ANSI_RED = "\u001B[31m"; //para las serpientes
+     public static final String ANSI_GREEN = "\u001B[32m"; //para las escaleras
     public static final String ANSI_RESET = "\u001B[0m"; //para que solo el char quede con el color
+
     public Menu() {
         game = new SnakesAndLaddersGame();
         sc = new Scanner(System.in);
@@ -27,8 +26,8 @@ public class Menu {
                 myMenu();
                 break;
             case 2:
-                //game.trampa();
                System.out.println(seeBoard(game.getRows(),game.getColumns()));
+                //game.printList();
                 myMenu();
                 break;
             case 3:
@@ -60,21 +59,22 @@ public class Menu {
     }
 
     public String seeBoard(int rows , int columns){
-
       return seeBoard(columns,rows*columns,1,"", game.getLastBox());
     }
 
     private String seeBoard(int cols, int i, int lineBreak,String out, Box last){
+        System.out.println("Imprimiendo la casilla #"+i);
         if(i==1){
             out+= "["+i+last.getItemSymbol()+' '+last.getPlayer()+"]";
             return out;
         }else{
             if(lineBreak!=cols){
-                    if ((last.getGameItem().equals(GameItem.TOP)) || (last.getGameItem().equals(GameItem.BASE))) {
+                    if (last.isnumeric()) {
+                        System.out.println(i+" tiene parte de una escalera");
                         out += "[" + i + ANSI_GREEN + last.getItemSymbol() + ANSI_RESET + ' ' + last.getPlayer() + "]" + " ";
                       //System.out.println(i);
                         return seeBoard(cols, i - 1, lineBreak + 1, out, last.getPrevious());
-                    } else if (last.getItemSymbol() != ' ') {
+                    } else if (!last.getItemSymbol().equals("")) {
                         out += "[" + i + ANSI_RED + last.getItemSymbol() + ANSI_RESET + ' ' + last.getPlayer() + "]" + " ";
                         //System.out.println(i);
                         return seeBoard(cols, i - 1, lineBreak + 1, out, last.getPrevious());
@@ -84,12 +84,13 @@ public class Menu {
                         return seeBoard(cols, i - 1, lineBreak + 1, out, last.getPrevious());
                     }
             }else{
-                if(Character.isDigit(last.getItemSymbol())){
+                if(last.isnumeric()){
+                    System.out.println(i+" tiene parte de una escalera");
                     out+= "["+i+ANSI_GREEN+last.getItemSymbol()+ANSI_RESET+' '+last.getPlayer()+"]"+"\n";
                     lineBreak =1;
                     //System.out.println(i);
                     return seeBoard(cols,i-1,lineBreak,out,last.getPrevious());
-                }else if(last.getItemSymbol()!=' '){
+                }else if(!last.getItemSymbol().equals("")){
                     out+= "["+i+ANSI_RED+last.getItemSymbol()+ANSI_RESET+' '+last.getPlayer()+"]"+"\n";
                     lineBreak =1;
                     //System.out.println(i);

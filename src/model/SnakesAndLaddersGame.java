@@ -24,11 +24,11 @@ public class SnakesAndLaddersGame {
         setCurrentLadders(ladders);
         int position =1;
         createBoard(position);
-        setSnakes(0);
-        setLadders(0);
         setLastBox(findLast(board));
         Box current = lastBox;
         //current = current.getPrevious();
+        setSnakes(0);
+        setLadders(0);
         connectSnakes(snakes,current,0);
         connectLadders(ladders,board,current,1);
         setRows(n);
@@ -36,8 +36,6 @@ public class SnakesAndLaddersGame {
 
 
     }
-
-
 
     public void createBoard(int position){
         if (position == boardSize){
@@ -69,108 +67,131 @@ public class SnakesAndLaddersGame {
     }
 
     public void setSnakes(int createdSnakes){
-
-        if(((currentSnakes*2)!=createdSnakes)){
-            int number = (int)((Math.random()*2)+1);
-           //System.out.println("numero"+number);
-            int position = (int)((Math.random())*boardSize)+1;
-            //System.out.println("position"+position);
-            String add = "NONE";
-
-            switch (number) {
-                case 1:
-                    add = "HEAD";
-                    createdSnakes += 1;
-                    break;
-                case 2:
-                    add = "TAIL";
-                    createdSnakes += 1;
-                    break;
-            }
-
-            Box newBox = search(position);
-            if(!(newBox.isFirst()) || !(newBox.isIslast())){
-                System.out.println(newBox.getPosition()+" Tiene "+add);
-                newBox.setGameItem(GameItem.valueOf(add));
-            }
-
-            setSnakes(createdSnakes);
+        if(currentSnakes!=createdSnakes){
+            setHead(false);
+            setTail(false);
+            setSnakes(createdSnakes+1);
 
         }
 
     }
 
+    private void setHead(boolean added){
+        if(!added){
+            int position = (int)((Math.random())*boardSize)+1;
+            Box newBox = search(position);
+            if(!(newBox.isFirst()) && !(newBox.isIslast())){
+                if(newBox.getGameItem().equals(GameItem.NONE)){
+                    //System.out.println(newBox.getPosition()+" beberia tener "+add);
+                    newBox.setGameItem(GameItem.HEAD);
+                    setHead(true);
+                    //System.out.println(newBox.getPosition()+" Tiene "+newBox.getGameItem());
+                }else {
+                    setHead(false);
+                }
+            }else {
+                setHead(false);
+            }
+        }
+
+
+    }
+
+    private void setTail(boolean added){
+        if(!added){
+            int position = (int)((Math.random())*boardSize)+1;
+            Box newBox = search(position);
+            if(!(newBox.isFirst()) && !(newBox.isIslast())){
+                if(newBox.getGameItem().equals(GameItem.NONE)){
+                    //System.out.println(newBox.getPosition()+" beberia tener "+add);
+                    newBox.setGameItem(GameItem.TAIL);
+                    setHead(true);
+                    //System.out.println(newBox.getPosition()+" Tiene "+newBox.getGameItem());
+                }else {
+                    setHead(false);
+                }
+            }else {
+                setHead(false);
+            }
+        }
+
+
+    }
+
+    //separar el agregado de etiquetas
     public void setLadders(int createdLadders){
-
-        if(((currentLadders*2)!=createdLadders)){
-            int number = (int)((Math.random()*2)+1);
-          //System.out.println("numero"+number);
-            int position = (int)((Math.random())*boardSize)+1;
-            //System.out.println("position"+position);
-            String add = "NONE";
-
-            switch (number) {
-                case 1:
-                    add = "TOP";
-                    createdLadders += 1;
-                    break;
-                case 2:
-                    add = "BASE";
-                    createdLadders += 1;
-                    break;
-            }
-
-            Box newBox = search(position);
-            if(!(newBox.isFirst()) || !(newBox.isIslast())){
-                System.out.println(newBox.getPosition()+" Tiene "+add);
-                newBox.setGameItem(GameItem.valueOf(add));
-            }
-
-            setLadders(createdLadders);
-
+        if((currentLadders)!=createdLadders){
+            setBase(false);
+            setTop(false);
+            setLadders(createdLadders+1);
         }
 
     }
 
+    private void setBase(boolean added){
+        if(!added){
+            int position = (int)((Math.random())*boardSize)+1;
+            //System.out.println("Numero generado: "+position);
+            Box newBox = search(position);
+            if(!(newBox.isFirst()) && !(newBox.isIslast())){
+                if(newBox.getGameItem().equals(GameItem.NONE)){
+                    newBox.setGameItem(GameItem.BASE);
+                    //System.out.println(newBox.getPosition()+" y Tiene "+newBox.getGameItem());
+                    setBase(true);
+                }else {
+                    setBase(false);
+                }
+            }else {
+                setBase(false);
+            }
+        }
+    }
+
+    private void setTop(boolean added){
+        if(!added){
+            int position = (int)((Math.random())*boardSize)+1;
+            //System.out.println("Numero generado: "+position);
+            Box newBox = search(position);
+            if(!(newBox.isFirst()) && !(newBox.isIslast())){
+                if(newBox.getGameItem().equals(GameItem.NONE)){
+                    newBox.setGameItem(GameItem.TOP);
+                    //System.out.println(newBox.getPosition()+" y Tiene "+newBox.getGameItem());
+                    setTop(true);
+                }else{
+                    setTop(false);
+                }
+            }else {
+                setTop(false);
+            }
+        }
+    }
 
     public Box search(int position){
-        System.out.println("la que se busca pri "+position);
+        //System.out.println("la que se busca pri "+position);
           return search(board,position);
     }
 
     private Box search(Box current,int position){
         if((current != null) && (current.getPosition() == position)){
-            System.out.println("numero 1 "+current.getPosition());
+            //System.out.println("numero 1 "+current.getPosition());
             return current;
         } else{
-            System.out.println("numero 2: "+current.getPosition());
+            //System.out.println("numero 2: "+current.getPosition());
             return search(current.getNext(),position);
         }
     }
 
-    /*public void trampa(){
-        Box n = board;
-        boolean out = false;
-        while(!out){
-            if(n.getNext() != null) {
-                System.out.println(board.getPosition());
-                n = n.getNext();
-            }else{
-                out = true;
-            }
-        }
-    }*/
-
     public void connectSnakes(int currentSnakes,Box current, int symbolIndex){
         if(currentSnakes!=0 && current!=null){
-            if(current.getGameItem().equals(GameItem.HEAD)){
+            if(current.getGameItem().equals(GameItem.HEAD) && current.getSnake()==null){
                 Snake newSnake = new Snake();
                 current.setSnake(newSnake);
-                current.setItemSymbol(SNAKES.charAt(symbolIndex));
+                current.setItemSymbol(Character.toString(SNAKES.charAt(symbolIndex)));
                 newSnake.setHead(current);
                 Box tail = findTail(board,false);
-                tail.setItemSymbol(SNAKES.charAt(symbolIndex));
+                tail.setItemSymbol(Character.toString(SNAKES.charAt(symbolIndex)));
                 newSnake.setTail(tail);
+                tail.setSnake(newSnake);
                 connectSnakes(currentSnakes-1,current.getPrevious(), symbolIndex+1);
             }else{
                 connectSnakes(currentSnakes,current.getPrevious(),symbolIndex);
@@ -183,10 +204,10 @@ public class SnakesAndLaddersGame {
     //encuentra la primera cola de serpiente
     private Box findTail(Box board, boolean out){
         if(out!=true){
-            if(board.getGameItem().equals(GameItem.TAIL)){
+            if(board.getGameItem().equals(GameItem.TAIL) && board.getSnake()==null){
                 return findTail(board,true);
             }else{
-                return findTail(board.getNext(), out);
+                return findTail(board.getNext(), false);
             }
         }
         return board;
@@ -194,15 +215,16 @@ public class SnakesAndLaddersGame {
 
     public void connectLadders(int currentLadders , Box current, Box last, int symbolIndex){
         if(currentLadders!=0 && current!=null){
-            if(current.getGameItem().equals(GameItem.BASE)){
+            if(current.getGameItem().equals(GameItem.BASE) && current.getLadder()==null){
                 Ladder newLadder = new Ladder();
                 newLadder.setBase(current);
-                System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"+last.getPosition());
                 Box top = findTop(last,false);
                 newLadder.setTop(top);
                 current.setLadder(newLadder);
-                current.setItemSymbol((char) symbolIndex);
-                top.setItemSymbol((char) symbolIndex);
+                top.setLadder(newLadder);
+                current.setItemSymbol(String.valueOf(symbolIndex) );
+                top.setItemSymbol(String.valueOf(symbolIndex));
+                System.out.println("posicion de la base: "+newLadder.getBase().getPosition()+" posicion de la parte de arriba: "+newLadder.getTop().getPosition());
                 connectLadders(currentLadders-1,current.getNext(),last, symbolIndex+1);
             }else {
                 connectLadders(currentLadders,current.getNext(),last, symbolIndex);
@@ -213,7 +235,7 @@ public class SnakesAndLaddersGame {
 
     private Box findTop(Box current, boolean out){
         if(out!=true){
-            if((current != null) && (current.getGameItem().equals(GameItem.TOP))){
+            if((current != null) && (current.getGameItem().equals(GameItem.TOP)) && current.getLadder()==null ){
                 return findTop(current,true);
             }else if(current!=null){
                 return findTop(current.getPrevious(), out);
@@ -293,6 +315,26 @@ public class SnakesAndLaddersGame {
     public void setRootScore(Player rootPlayer) {
         this.rootPlayer = rootPlayer;
     }
+
+    public void printList(){
+        System.out.println("Tamaño del tablero: "+boardSize);
+        if(board!=null){
+            if(board.getNext()!=null){
+                System.out.println("Numero: "+board.getPosition()+" Item: "+board.getGameItem());
+                Box next = board.getNext();
+                int i=1;
+                while (i<boardSize && next !=null){
+                    System.out.println("Numero: "+next.getPosition()+" Item: "+next.getGameItem());
+                    next = next.getNext();
+                }
+            }else{
+                System.out.println("Numero: "+board.getPosition()+" Item: "+board.getGameItem());
+            }
+
+        }
+
+    }
+
 
    // public String getPlayers(){ return  }
 
