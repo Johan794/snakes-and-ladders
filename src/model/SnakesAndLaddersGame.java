@@ -25,7 +25,7 @@ public class SnakesAndLaddersGame {
         int position =1;
         createBoard(position);
         setLastBox(findLast(board));
-        Box current = lastBox;
+        Box current = findLast(board);
         //current = current.getPrevious();
         setSnakes(0);
         setLadders(0);
@@ -105,13 +105,13 @@ public class SnakesAndLaddersGame {
                 if(newBox.getGameItem().equals(GameItem.NONE)){
                     //System.out.println(newBox.getPosition()+" beberia tener "+add);
                     newBox.setGameItem(GameItem.TAIL);
-                    setHead(true);
+                    setTail(true);
                     //System.out.println(newBox.getPosition()+" Tiene "+newBox.getGameItem());
                 }else {
-                    setHead(false);
+                    setTail(false);
                 }
             }else {
-                setHead(false);
+                setTail(false);
             }
         }
 
