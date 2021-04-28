@@ -27,7 +27,6 @@ public class Menu {
                 break;
             case 2:
                System.out.println(seeBoard(game.getRows(),game.getColumns()));
-                //game.printList();
                 myMenu();
                 break;
             case 3:
@@ -53,7 +52,7 @@ public class Menu {
         //int n , int m, int snakes, int ladders, String players
 
         game.startGame(n,m,snakes,ladders);
-        //TODO Un submenu dado que el jugador tendra opciones. -Camilo
+
 
 
     }
@@ -63,34 +62,36 @@ public class Menu {
     }
 
     private String seeBoard(int cols, int i, int lineBreak,String out, Box last){
-        System.out.println("Imprimiendo la casilla #"+i);
+        //System.out.println("Imprimiendo la casilla #"+i);
         if(i==1){
             out+= "["+i+last.getItemSymbol()+' '+last.getPlayer()+"]";
             return out;
         }else{
             if(lineBreak!=cols){
                     if (last.isnumeric()) {
-                        System.out.println(i+" tiene parte de una escalera");
-                        out += "[" + i + ANSI_GREEN + last.getItemSymbol() + ANSI_RESET + ' ' + last.getPlayer() + "]" + " ";
+                        //System.out.println(i+" tiene parte de una escalera");
+                        out += "[" + i + ANSI_GREEN + last.getItemSymbol() + ANSI_RESET + ' ' + last.getPlayer() + "]";
                       //System.out.println(i);
+                        //out+="\n";
                         return seeBoard(cols, i - 1, lineBreak + 1, out, last.getPrevious());
-                    } else if (!last.getItemSymbol().equals("")) {
-                        out += "[" + i + ANSI_RED + last.getItemSymbol() + ANSI_RESET + ' ' + last.getPlayer() + "]" + " ";
-                        //System.out.println(i);
+                    } else if (!last.getItemSymbol().equals(" ")) {
+                        out += "[" + i + ANSI_RED + last.getItemSymbol() + ANSI_RESET + ' ' + last.getPlayer() + "]";
+                        //out+="\n";
                         return seeBoard(cols, i - 1, lineBreak + 1, out, last.getPrevious());
                     } else {
-                        out += "[" + i + last.getItemSymbol() + ' ' + last.getPlayer() + "]" + " ";
+                        out += "[" + i + last.getItemSymbol() + ' ' + last.getPlayer() + "]";
+                        //out+="\n";
                        // System.out.println(i);
                         return seeBoard(cols, i - 1, lineBreak + 1, out, last.getPrevious());
                     }
             }else{
                 if(last.isnumeric()){
-                    System.out.println(i+" tiene parte de una escalera");
+                    //System.out.println(i+" tiene parte de una escalera");
                     out+= "["+i+ANSI_GREEN+last.getItemSymbol()+ANSI_RESET+' '+last.getPlayer()+"]"+"\n";
                     lineBreak =1;
                     //System.out.println(i);
                     return seeBoard(cols,i-1,lineBreak,out,last.getPrevious());
-                }else if(!last.getItemSymbol().equals("")){
+                }else if(!last.getItemSymbol().equals(" ")){
                     out+= "["+i+ANSI_RED+last.getItemSymbol()+ANSI_RESET+' '+last.getPlayer()+"]"+"\n";
                     lineBreak =1;
                     //System.out.println(i);

@@ -24,11 +24,12 @@ public class SnakesAndLaddersGame {
         setCurrentLadders(ladders);
         int position =1;
         createBoard(position);
-        setLastBox(findLast(board));
-        Box current = lastBox;
-        //current = current.getPrevious();
         setSnakes(0);
         setLadders(0);
+        printList();
+        setLastBox(findLast(board));
+        Box current = findLast(board);
+        //current = current.getPrevious();
         connectSnakes(snakes,current,0);
         connectLadders(ladders,board,current,1);
         setRows(n);
@@ -68,51 +69,61 @@ public class SnakesAndLaddersGame {
 
     public void setSnakes(int createdSnakes){
         if(currentSnakes!=createdSnakes){
-            setHead(false);
-            setTail(false);
-            setSnakes(createdSnakes+1);
+            setHead(false,(boardSize / 2));
+            setTail(false, (boardSize / 2));
+            setSnakes(createdSnakes + 1);
 
         }
 
     }
 
-    private void setHead(boolean added){
+    private void setHead(boolean added, int headBorder){
         if(!added){
             int position = (int)((Math.random())*boardSize)+1;
-            Box newBox = search(position);
-            if(!(newBox.isFirst()) && !(newBox.isIslast())){
-                if(newBox.getGameItem().equals(GameItem.NONE)){
-                    //System.out.println(newBox.getPosition()+" beberia tener "+add);
-                    newBox.setGameItem(GameItem.HEAD);
-                    setHead(true);
-                    //System.out.println(newBox.getPosition()+" Tiene "+newBox.getGameItem());
-                }else {
-                    setHead(false);
-                }
+            if(position<=headBorder){
+                setHead(false,headBorder);
             }else {
-                setHead(false);
+                Box newBox = search(position);
+                if(!(newBox.isFirst()) && !(newBox.isIslast())){
+                    if(newBox.getGameItem().equals(GameItem.NONE)){
+                        //System.out.println(newBox.getPosition()+" beberia tener "+add);
+                        newBox.setGameItem(GameItem.HEAD);
+                        setHead(true,headBorder);
+                        //System.out.println(newBox.getPosition()+" Tiene "+newBox.getGameItem());
+                    }else {
+                        setHead(false,headBorder);
+                    }
+                }else {
+                    setHead(false,headBorder);
+                }
             }
+
         }
 
 
     }
 
-    private void setTail(boolean added){
+    private void setTail(boolean added, int border){
         if(!added){
-            int position = (int)((Math.random())*boardSize)+1;
-            Box newBox = search(position);
-            if(!(newBox.isFirst()) && !(newBox.isIslast())){
-                if(newBox.getGameItem().equals(GameItem.NONE)){
-                    //System.out.println(newBox.getPosition()+" beberia tener "+add);
-                    newBox.setGameItem(GameItem.TAIL);
-                    setHead(true);
-                    //System.out.println(newBox.getPosition()+" Tiene "+newBox.getGameItem());
+            int position = (int)((Math.random())*border)+1;
+            if(position>=border){
+                setTail(false,border);
+            }else{
+                Box newBox = search(position);
+                if(!(newBox.isFirst()) && !(newBox.isIslast())){
+                    if(newBox.getGameItem().equals(GameItem.NONE)){
+                        //System.out.println(newBox.getPosition()+" beberia tener "+add);
+                        newBox.setGameItem(GameItem.TAIL);
+                        setTail(true, border);
+                        //System.out.println(newBox.getPosition()+" Tiene "+newBox.getGameItem());
+                    }else {
+                        setTail(false, border);
+                    }
                 }else {
-                    setHead(false);
+                    setTail(false, border);
                 }
-            }else {
-                setHead(false);
             }
+
         }
 
 
@@ -121,48 +132,59 @@ public class SnakesAndLaddersGame {
     //separar el agregado de etiquetas
     public void setLadders(int createdLadders){
         if((currentLadders)!=createdLadders){
-            setBase(false);
-            setTop(false);
+            setBase(false,(boardSize/2));
+            setTop(false, (boardSize/2));
             setLadders(createdLadders+1);
+
         }
 
     }
 
-    private void setBase(boolean added){
+    private void setBase(boolean added, int border){
         if(!added){
-            int position = (int)((Math.random())*boardSize)+1;
+            int position = (int)((Math.random())*border)+1;
             //System.out.println("Numero generado: "+position);
-            Box newBox = search(position);
-            if(!(newBox.isFirst()) && !(newBox.isIslast())){
-                if(newBox.getGameItem().equals(GameItem.NONE)){
-                    newBox.setGameItem(GameItem.BASE);
-                    //System.out.println(newBox.getPosition()+" y Tiene "+newBox.getGameItem());
-                    setBase(true);
+            if(position>=border){
+                setBase(false,border);
+            }else {
+                Box newBox = search(position);
+                if(!(newBox.isFirst()) && !(newBox.isIslast())){
+                    if(newBox.getGameItem().equals(GameItem.NONE)){
+                        newBox.setGameItem(GameItem.BASE);
+                        //System.out.println(newBox.getPosition()+" y Tiene "+newBox.getGameItem());
+                        setBase(true,border);
+                    }else {
+                        setBase(false,border);
+                    }
                 }else {
-                    setBase(false);
+                    setBase(false,border);
                 }
-            }else {
-                setBase(false);
             }
+
         }
     }
 
-    private void setTop(boolean added){
+    private void setTop(boolean added, int head){
         if(!added){
             int position = (int)((Math.random())*boardSize)+1;
-            //System.out.println("Numero generado: "+position);
-            Box newBox = search(position);
-            if(!(newBox.isFirst()) && !(newBox.isIslast())){
-                if(newBox.getGameItem().equals(GameItem.NONE)){
-                    newBox.setGameItem(GameItem.TOP);
-                    //System.out.println(newBox.getPosition()+" y Tiene "+newBox.getGameItem());
-                    setTop(true);
-                }else{
-                    setTop(false);
-                }
+            if(position<=head){
+                setTop(false,head);
             }else {
-                setTop(false);
+                //System.out.println("Numero generado: "+position);
+                Box newBox = search(position);
+                if(!(newBox.isFirst()) && !(newBox.isIslast())){
+                    if(newBox.getGameItem().equals(GameItem.NONE)){
+                        newBox.setGameItem(GameItem.TOP);
+                        //System.out.println(newBox.getPosition()+" y Tiene "+newBox.getGameItem());
+                        setTop(true,head);
+                    }else{
+                        setTop(false,head);
+                    }
+                }else {
+                    setTop(false,head);
+                }
             }
+
         }
     }
 
@@ -224,7 +246,7 @@ public class SnakesAndLaddersGame {
                 top.setLadder(newLadder);
                 current.setItemSymbol(String.valueOf(symbolIndex) );
                 top.setItemSymbol(String.valueOf(symbolIndex));
-                System.out.println("posicion de la base: "+newLadder.getBase().getPosition()+" posicion de la parte de arriba: "+newLadder.getTop().getPosition());
+                //System.out.println("posicion de la base: "+newLadder.getBase().getPosition()+" posicion de la parte de arriba: "+newLadder.getTop().getPosition());
                 connectLadders(currentLadders-1,current.getNext(),last, symbolIndex+1);
             }else {
                 connectLadders(currentLadders,current.getNext(),last, symbolIndex);

@@ -19,7 +19,7 @@ public class Box {
         isFirst = true;
         islast = false;
         position = 1;
-        itemSymbol ="";
+        itemSymbol =" ";
         player = ' ';
     }
     //el ultimo cuadro se le debe hacer set al item
@@ -27,7 +27,7 @@ public class Box {
         isFirst = false;
         islast = false;
         this.position = position;
-        itemSymbol ="";
+        itemSymbol =" ";
         player = ' ';
     }
 
