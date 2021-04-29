@@ -26,9 +26,9 @@ public class Main {
      *  TODO: Hacer acciones con los saltos de linea por consola
      *  TODO: Hacer acciones de la entrada 'num' como dice el enunciado
      *  TODO: Hacer acciones de la entrada 'simul'
+     *  TODO: Hacer acciones de la entrada 'menu'
      *  TODO: Hacer el arbol binario ordenado segun el enunciado
      *  TODO: Un submenu dado que el jugador tendra opciones
-     *  TODO: Verificar si se asigna correctamente head-tail y base - top
      *  TODO: ESTE ES EL MÁS IMPORTANTE , PROBAR LAS COSAS Y SABER SI FUNCIONAN Y SI CUMPLEN LAS CONDICIONES DEL ENUNCIADO
      */
 
