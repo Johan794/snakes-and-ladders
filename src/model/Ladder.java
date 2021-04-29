@@ -1,12 +1,18 @@
 package model;
 
 public class Ladder {
+    //Relationship.
     private  Box base;
     private  Box top;
 
+    /**
+     * Instantiates a new Ladder.
+     */
     public Ladder() {
 
     }
+
+    //Getters and Setters
 
     public Box getBase() {
         return base;
