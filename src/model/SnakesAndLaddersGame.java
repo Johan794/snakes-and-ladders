@@ -1,6 +1,9 @@
 package model;
 
 
+/**
+ * The type Snakes and ladders game.
+ */
 public class SnakesAndLaddersGame {
     private Box board;
     private Box lastBox;
@@ -22,6 +25,9 @@ public class SnakesAndLaddersGame {
 
     //TODO: hacer metodo para el avanze del juego - Camilo
 
+    /**
+     * Instantiates a new Snakes and ladders game.
+     */
     public SnakesAndLaddersGame() {
 
     }
@@ -40,6 +46,11 @@ public class SnakesAndLaddersGame {
 
     }*/
 
+    /**
+     * Add player.
+     *
+     * @param element the element
+     */
     public void addPlayer(String element){
         Player p = new Player(element);
         if(firts == (null)){
@@ -59,6 +70,14 @@ public class SnakesAndLaddersGame {
     }
 
 
+    /**
+     * Start game.
+     *
+     * @param n       the n
+     * @param m       the m
+     * @param snakes  the snakes
+     * @param ladders the ladders
+     */
     public void startGame(int n , int m, int snakes, int ladders){
         setBoardSize(n*m);
         setCurrentSnakes(snakes);
@@ -79,6 +98,11 @@ public class SnakesAndLaddersGame {
 
     }
 
+    /**
+     * Create board.
+     *
+     * @param position the position
+     */
     public void createBoard(int position){
         if (position == boardSize){
             Box aux = findLast(board);
@@ -108,6 +132,11 @@ public class SnakesAndLaddersGame {
         }
     }
 
+    /**
+     * Set snakes.
+     *
+     * @param createdSnakes the created snakes
+     */
     public void setSnakes(int createdSnakes){
         if(currentSnakes!=createdSnakes){
             setHead(false,(boardSize / 2));
@@ -170,7 +199,12 @@ public class SnakesAndLaddersGame {
 
     }
 
-    //separar el agregado de etiquetas
+    /**
+     * Set ladders.
+     *
+     * @param createdLadders the created ladders
+     */
+//separar el agregado de etiquetas
     public void setLadders(int createdLadders){
         if((currentLadders)!=createdLadders){
             setBase(false,(boardSize/2));
@@ -229,6 +263,12 @@ public class SnakesAndLaddersGame {
         }
     }
 
+    /**
+     * Search box.
+     *
+     * @param position the position
+     * @return the box
+     */
     public Box search(int position){
         //System.out.println("la que se busca pri "+position);
           return search(board,position);
@@ -244,6 +284,13 @@ public class SnakesAndLaddersGame {
         }
     }
 
+    /**
+     * Connect snakes.
+     *
+     * @param currentSnakes the current snakes
+     * @param current       the current
+     * @param symbolIndex   the symbol index
+     */
     public void connectSnakes(int currentSnakes,Box current, int symbolIndex){
         if(currentSnakes!=0 && current!=null){
             if(current.getGameItem().equals(GameItem.HEAD) && current.getSnake()==null){
@@ -276,6 +323,14 @@ public class SnakesAndLaddersGame {
         return board;
     }
 
+    /**
+     * Connect ladders.
+     *
+     * @param currentLadders the current ladders
+     * @param current        the current
+     * @param last           the last
+     * @param symbolIndex    the symbol index
+     */
     public void connectLadders(int currentLadders , Box current, Box last, int symbolIndex){
         if(currentLadders!=0 && current!=null){
             if(current.getGameItem().equals(GameItem.BASE) && current.getLadder()==null){
@@ -296,6 +351,10 @@ public class SnakesAndLaddersGame {
 
     }
 
+
+
+
+
     private Box findTop(Box current, boolean out){
         if(out!=true){
             if((current != null) && (current.getGameItem().equals(GameItem.TOP)) && current.getLadder()==null ){
@@ -307,6 +366,12 @@ public class SnakesAndLaddersGame {
         return current;
     }
 
+    /**
+     * Find last box.
+     *
+     * @param board the board
+     * @return the box
+     */
     public Box findLast(Box board){
         if (board.getNext() != null) {
             //System.out.println(board.getPosition());
@@ -317,13 +382,17 @@ public class SnakesAndLaddersGame {
         }
     }
 
+    //Getters and Setters.
+
     public int getColumns() {
         return columns;
     }
 
+
     public void setColumns(int columns) {
         this.columns = columns;
     }
+
 
     public int getRows() {
         return rows;
@@ -334,46 +403,57 @@ public class SnakesAndLaddersGame {
         this.rows = rows;
     }
 
+
     public void setCurrentSnakes(int currentSnakes) {
         this.currentSnakes = currentSnakes;
     }
+
 
     public void setCurrentLadders(int currentLadders) {
         this.currentLadders = currentLadders;
     }
 
+
     public void setBoardSize(int boardSize) {
         this.boardSize = boardSize;
     }
+
 
     public Box getBoard() {
         return board;
     }
 
+
     public int getBoardSize() {
         return boardSize;
     }
+
 
     public int getCurrentSnakes() {
         return currentSnakes;
     }
 
+
     public int getCurrentLadders() {
         return currentLadders;
     }
+
 
     public Box getLastBox() {
       //  System.out.println(lastBox.getPosition());
         return lastBox;
     }
 
+
     public void setLastBox(Box lastBox){
         this.lastBox = lastBox;
     }
 
+
     public Player getRootScore() {
         return rootPlayer;
     }
+
 
     public void setRootScore(Player rootPlayer) {
         this.rootPlayer = rootPlayer;
