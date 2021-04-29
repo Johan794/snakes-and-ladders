@@ -7,6 +7,8 @@ public class Player {
     private Player left;
     private Player right;
     private Player parent;
+    private Player next;
+
 
     public Player(String player) {
         this.player = player;
@@ -27,6 +29,7 @@ public class Player {
     public void setPlayer(String player) {
         this.player = player;
     }
+
 
     public Player getLeft() {
         return left;
@@ -50,5 +53,15 @@ public class Player {
 
     public void setParent(Player parent) {
         this.parent = parent;
+
+    }
+
+    public Player getNext(){
+        return next;
+    }
+
+    public void setNext (Player next){
+        this.next = next;
+
     }
 }

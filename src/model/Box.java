@@ -1,7 +1,7 @@
 package model;
 
 public class Box {
-    private char player;
+    private String player;
     private int position;
     private boolean islast;
     private boolean isFirst;
@@ -20,7 +20,7 @@ public class Box {
         islast = false;
         position = 1;
         itemSymbol =" ";
-        player = ' ';
+        player = "";
     }
     //el ultimo cuadro se le debe hacer set al item
     public Box(int position){
@@ -28,7 +28,7 @@ public class Box {
         islast = false;
         this.position = position;
         itemSymbol =" ";
-        player = ' ';
+        player = "";
     }
 
     public Snake getSnake() {
@@ -47,11 +47,11 @@ public class Box {
         ladder = newLadder;
     }
 
-    public char getPlayer() {
+    public String getPlayer() {
         return player;
     }
 
-    public void setPlayer(char player) {
+    public void setPlayer(String player) {
         this.player = player;
     }
 
