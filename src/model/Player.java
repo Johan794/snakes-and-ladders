@@ -4,8 +4,11 @@ public class Player {
     private int playerScore;
     private String player;
 
-    public Player(int playerScore, String player) {
-        this.playerScore = playerScore;
+    private Player left;
+    private Player right;
+    private Player parent;
+
+    public Player(String player) {
         this.player = player;
     }
 
@@ -23,5 +26,29 @@ public class Player {
 
     public void setPlayer(String player) {
         this.player = player;
+    }
+
+    public Player getLeft() {
+        return left;
+    }
+
+    public void setLeft(Player left) {
+        this.left = left;
+    }
+
+    public Player getRight() {
+        return right;
+    }
+
+    public void setRight(Player right) {
+        this.right = right;
+    }
+
+    public Player getParent() {
+        return parent;
+    }
+
+    public void setParent(Player parent) {
+        this.parent = parent;
     }
 }
