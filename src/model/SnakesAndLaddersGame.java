@@ -70,7 +70,6 @@ public class SnakesAndLaddersGame {
         createBoard(position);
         setSnakes(0);
         setLadders(0);
-        printList();
         setLastBox(findLast(board));
         Box current = findLast(board);
         //current = current.getPrevious();
@@ -132,7 +131,7 @@ public class SnakesAndLaddersGame {
         String aux;
         int playerToMove;
         Box next = boxPlayer.getNext();
-        if(to!=0){
+        if(to!=0 && next!=null){
             players = boxPlayer.getPlayer();
             playerToMove = players.indexOf(currentPlayer);
             // System.out.println("Jugador que se mueve: "+currentPlayer);
@@ -144,8 +143,8 @@ public class SnakesAndLaddersGame {
             // System.out.println("Jugador movido "+players.replace(players.charAt(playerToMove),' '));
             boxPlayer.setPlayer(players.replace(players.charAt(playerToMove),' '));
             return moveTo(next,to-1,currentPlayer);
-        }else {
-            return next.isIslast();
+        }else{
+            return boxPlayer.isIslast();
         }
 
     }

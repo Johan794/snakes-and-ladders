@@ -79,10 +79,15 @@ public class Menu {
             System.out.println("Please press intro:");
             String response = sc.nextLine();
             System.out.println(current.getPlayer()+" got: "+dice);
+            System.out.println("\n");
             if(response.equals("")){
                 if(game.move(current.getPlayer(),dice)){
+                    System.out.println(seeBoard(game.getRows(), game.getColumns() ));
+                    System.out.println("\n");
                     System.out.println("Player "+current.getPlayer()+" has won!!!");
                 }else {
+                    System.out.println(seeBoard(game.getRows(), game.getColumns() ));
+                    System.out.println("\n");
                     move(players-1,current.getNext());
                 }
             }else{
