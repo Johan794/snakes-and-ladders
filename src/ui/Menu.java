@@ -1,6 +1,7 @@
 package ui;
 
 import model.Box;
+import model.Player;
 import model.SnakesAndLaddersGame;
 import java.util.Scanner;
 
@@ -52,8 +53,6 @@ public class Menu {
         //5 4 3 2 #%* (tablero 5x4, 3 serpientes, 2 escaleras y 3 jugadores)
 
         String data = sc.nextLine();
-
-
         String[] parts = data.split(" ");
         int n = Integer.parseInt(parts[0]);
         int m = Integer.parseInt(parts[1]);
@@ -61,13 +60,37 @@ public class Menu {
         int ladders = Integer.parseInt(parts[3]);
         int players = Integer.parseInt(parts[4]); //Numero de jugadores
 
+        game.setCurrentPlayers(players);
         playersGame(players,0);
 
         //int n , int m, int snakes, int ladders, String players
 
         game.startGame(n,m,snakes,ladders);
+        System.out.println(seeBoard(game.getRows(), game.getColumns() ));
+        move(players,game.getFirts());
 
 
+
+    }
+    public void move(int players , Player current){
+        if(players!=0 && current!=null){
+            int dice =(int) (Math.random()*6)+1;
+            System.out.println("It is "+current.getPlayer()+"'s turn");
+            System.out.println("Please press intro:");
+            String response = sc.nextLine();
+            System.out.println(current.getPlayer()+" got: "+dice);
+            if(response.equals("")){
+                if(game.move(current.getPlayer(),dice)){
+                    System.out.println("Player "+current.getPlayer()+" has won!!!");
+                }else {
+                    move(players-1,current.getNext());
+                }
+            }else{
+                System.out.println("Se supone que aca es lo de simul");
+            }
+        }else{
+            move(game.getCurrentPlayers(), game.getFirts());
+        }
 
     }
 
@@ -83,11 +106,7 @@ public class Menu {
         return seeBoard(columns,rows*columns,1,"", game.getLastBox());
     }
 
-
-
-
     private String seeBoard(int cols, int i, int lineBreak,String out, Box last){
-
         if(i==1){
             out+= "[\t"+i+last.getItemSymbol()+' '+last.getPlayer()+"\t]";
             return out;

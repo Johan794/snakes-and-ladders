@@ -14,6 +14,7 @@ public class Player {
     private Player right;
     private Player parent;
 
+
     //Attributes para lista.
     private Player next;
 
@@ -62,4 +63,30 @@ public class Player {
     public void setNext(Player next) {
         this.next = next;
     }
+
+    public Player getLeft() {
+        return left;
+    }
+
+    public void setLeft(Player left) {
+        this.left = left;
+    }
+
+    public Player getRight() {
+        return right;
+    }
+
+    public void setRight(Player right) {
+        this.right = right;
+    }
+
+    public Player getParent() {
+        return parent;
+    }
+
+    public void setParent(Player parent) {
+        this.parent = parent;
+    }
+
+
 }
