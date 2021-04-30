@@ -122,7 +122,7 @@ public class Menu {
 
     private String seeBoard(int cols, int i, int lineBreak,String out, Box last){
         if(i==1){
-            out+= "[\t"+i+last.getItemSymbol()+"]";
+            out+= "[\t"+i+last.getItemSymbol()+"\t]";
             return out;
         }else{
             if(lineBreak!=cols){
@@ -146,17 +146,17 @@ public class Menu {
             }else{
                 if(last.isnumeric()){
                     //System.out.println(i+" tiene parte de una escalera");
-                    out+= "[\t"+i+ANSI_GREEN+last.getItemSymbol()+ANSI_RESET+"]"+"\n";
+                    out+= "[\t"+i+ANSI_GREEN+last.getItemSymbol()+ANSI_RESET+"\t]"+"\n";
                     lineBreak =1;
                     //System.out.println(i);
                     return seeBoard(cols,i-1,lineBreak,out,last.getPrevious());
                 }else if(!last.getItemSymbol().equals("")){
-                    out+= "[\t"+i+ANSI_RED+last.getItemSymbol()+ANSI_RESET+"]"+"\n";
+                    out+= "[\t"+i+ANSI_RED+last.getItemSymbol()+ANSI_RESET+"\t]"+"\n";
                     lineBreak =1;
                     //System.out.println(i);
                     return seeBoard(cols,i-1,lineBreak,out,last.getPrevious());
                 }else {
-                    out+= "[\t"+i+last.getItemSymbol()+"]"+"\n";
+                    out+= "[\t"+i+last.getItemSymbol()+"\t]"+"\n";
                     lineBreak =1;
                     //System.out.println(i);
                     return seeBoard(cols,i-1,lineBreak,out,last.getPrevious());
@@ -180,7 +180,7 @@ public class Menu {
                    // System.out.println("Item: "+last.getItemSymbol());
                    // System.out.println("Jugador: "+last.getPlayer());
                     //System.out.println(i+" tiene parte de una escalera");
-                    out += "[\t" + ANSI_GREEN + last.getItemSymbol() + ANSI_RESET +' '+last.getPlayer()+ "\t]";
+                    out += "[\t" + ANSI_GREEN + last.getItemSymbol() + ANSI_RESET +last.getPlayer()+ "\t]";
                     //System.out.println(i);
                     //out+="\n";
                     return seeBoard2(cols, i - 1, lineBreak + 1, out, last.getPrevious());
@@ -189,7 +189,7 @@ public class Menu {
                   //  System.out.println("Casilla "+i);
                    // System.out.println("Item: "+last.getItemSymbol());
                     //System.out.println("Jugador: "+last.getPlayer());
-                    out += "[\t" + ANSI_RED + last.getItemSymbol() + ANSI_RESET +' '+last.getPlayer()+"\t]";
+                    out += "[\t" + ANSI_RED + last.getItemSymbol() + ANSI_RESET +last.getPlayer()+"\t]";
                     //out+="\n";
                     return seeBoard2(cols, i - 1, lineBreak + 1, out, last.getPrevious());
                 } else {
@@ -207,7 +207,7 @@ public class Menu {
                   //  System.out.println("Item: "+last.getItemSymbol());
                   //  System.out.println("Jugador: "+last.getPlayer());
                     //System.out.println(i+" tiene parte de una escalera");
-                    out+= "[\t"+ANSI_GREEN+last.getItemSymbol()+ANSI_RESET+' '+last.getPlayer()+"]"+"\n";
+                    out+= "[\t"+ANSI_GREEN+last.getItemSymbol()+ANSI_RESET+last.getPlayer()+"]"+"\n";
                     lineBreak =1;
                     //System.out.println(i);
                     return seeBoard2(cols,i-1,lineBreak,out,last.getPrevious());
@@ -215,7 +215,7 @@ public class Menu {
                   //  System.out.println("Casilla "+i);
                   //  System.out.println("Item: "+last.getItemSymbol());
                    // System.out.println("Jugador: "+last.getPlayer());
-                    out+= "[\t"+ANSI_RED+last.getItemSymbol()+ANSI_RESET+' '+last.getPlayer()+"]"+"\n";
+                    out+= "[\t"+ANSI_RED+last.getItemSymbol()+ANSI_RESET+last.getPlayer()+"]"+"\n";
                     lineBreak =1;
                     //System.out.println(i);
                     return seeBoard2(cols,i-1,lineBreak,out,last.getPrevious());
