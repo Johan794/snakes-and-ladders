@@ -29,11 +29,8 @@ public class Main {
 
     /**
      * ¿Qué falta por hacer?:
-     *  TODO: Hacer acciones de la entrada 'num' como dice el enunciado
      *  TODO: Hacer acciones de la entrada 'simul'
-     *  TODO: Hacer acciones de la entrada 'menu'
-     *  TODO: Hacer el arbol binario ordenado segun el enunciado
-     *  TODO: Un submenu dado que el jugador tendra opciones
+     *  TODO: Imprimir los puntajess del arbol binario
      *  TODO: ESTE ES EL MÁS IMPORTANTE , PROBAR LAS COSAS Y SABER SI FUNCIONAN Y SI CUMPLEN LAS CONDICIONES DEL ENUNCIADO
      */
 

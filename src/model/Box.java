@@ -31,7 +31,7 @@ public class Box {
         isFirst = true;
         islast = false;
         position = 1;
-        itemSymbol =" ";
+        itemSymbol ="";
         player = "";
     }
 
@@ -45,7 +45,7 @@ public class Box {
         isFirst = false;
         islast = false;
         this.position = position;
-        itemSymbol =" ";
+        itemSymbol ="";
         player = "";
     }
 
