@@ -7,7 +7,7 @@ package model;
 public class SnakesAndLaddersGame {
     private Box board;
     private Box lastBox;
-    private Player players;
+    private int currentPlayers;
     private int boardSize;
     private int currentSnakes;
     private int currentLadders;
@@ -15,13 +15,11 @@ public class SnakesAndLaddersGame {
     private int columns;
     public static final String SNAKES = "ABCDEFGHIJHKLNOPQRSRWXYZ";
 
-    //public static final String LADDERS = "1234567890";
-
     private Player rootPlayer;
 
     private Player firts;
 
-    private int size;
+
 
     //TODO: hacer metodo para el avanze del juego - Camilo
 
@@ -31,20 +29,6 @@ public class SnakesAndLaddersGame {
     public SnakesAndLaddersGame() {
 
     }
-
-    /*public void addPlayer(String element){
-        Player p = new Player(element);
-        if(firts == (null)){
-            firts = p;
-        }else{
-            Player last = firts;
-            while(last.getNext()!=null){
-                last = last.getNext();
-            }
-            last.setNext(p);
-        }
-
-    }*/
 
     /**
      * Add player.
@@ -86,7 +70,6 @@ public class SnakesAndLaddersGame {
         createBoard(position);
         setSnakes(0);
         setLadders(0);
-        printList();
         setLastBox(findLast(board));
         Box current = findLast(board);
         //current = current.getPrevious();
@@ -94,7 +77,108 @@ public class SnakesAndLaddersGame {
         connectLadders(ladders,board,current,1);
         setRows(n);
         setColumns(m);
+        setCurrentPLayers(firts);
 
+    }
+
+    public void setCurrentPLayers(Player firts){
+        if(firts!=null){
+            String add = firts.getPlayer();
+            add+= board.getPlayer();
+            board.setPlayer(add);
+            setCurrentPLayers(firts.getNext());
+        }
+    }
+
+    public boolean move(String player , int dice ){
+        Box boxPlayer = search(player);
+        if(moveTo(boxPlayer,dice,player)){
+            addWinner(player);
+            return true;
+        }else {
+            String players;
+            String aux;
+            int playerToMove;
+            Box currentBoxPlayer = search(player);
+            //System.out.println("El jugador "+currentBoxPlayer.getPlayer()+" se encuentra en la casilla "+currentBoxPlayer.getPosition());
+            players = currentBoxPlayer.getPlayer();
+            playerToMove = players.indexOf(player);
+            if(currentBoxPlayer.getGameItem().equals(GameItem.HEAD)){
+                //System.out.println("Se encontró una serpiente asi que se movio");
+                Snake toSnake = currentBoxPlayer.getSnake();
+                aux=toSnake.getTail().getPlayer();
+                aux+=player;
+                toSnake.getTail().setPlayer(aux);
+                String replace = players.replace(players.charAt(playerToMove), ' ');
+                currentBoxPlayer.setPlayer(replace);
+            }else if(currentBoxPlayer.getGameItem().equals(GameItem.BASE)){
+                //System.out.println("Se encontro una escalera asi que se movio ");
+                Ladder toLadder = currentBoxPlayer.getLadder();
+                aux=toLadder.getTop().getPlayer();
+                aux+=player;
+                toLadder.getTop().setPlayer(aux);
+                currentBoxPlayer.setPlayer(players.replace(players.charAt(playerToMove),' '));
+            }
+
+            return false;
+        }
+
+
+    }
+
+    private boolean moveTo(Box boxPlayer , int to, String currentPlayer){
+        String players;
+        String aux;
+        int playerToMove;
+        Box next = boxPlayer.getNext();
+        if(to!=0 && next!=null){
+            players = boxPlayer.getPlayer();
+            playerToMove = players.indexOf(currentPlayer);
+            // System.out.println("Jugador que se mueve: "+currentPlayer);
+            // System.out.println("Jugadores en la casilla: "+players);
+            aux= next.getPlayer();
+            aux+=currentPlayer;
+            next.setPlayer(aux);
+            //System.out.println("Jugador en la casilla siguiente: "+next.getPlayer());
+            // System.out.println("Jugador movido "+players.replace(players.charAt(playerToMove),' '));
+            boxPlayer.setPlayer(players.replace(players.charAt(playerToMove),' '));
+            return moveTo(next,to-1,currentPlayer);
+        }else{
+            return boxPlayer.isIslast();
+        }
+
+    }
+
+    //lista enlazada de jugadores
+    public void addWinner(String player){
+        int moves;
+        Player newPLayer = new Player(player);
+        moves = newPLayer.getPlayerScore();
+        newPLayer.setPlayerScore(moves*boardSize);
+        if (rootPlayer==null){
+            rootPlayer = newPLayer;
+        }else{
+            addWinner(rootPlayer,newPLayer);
+        }
+
+    }
+
+    private void addWinner(Player current , Player newPlayer){
+        if(newPlayer.getPlayerScore()<=current.getPlayerScore()){
+            if(current.getLeft()==null){
+                current.setLeft(newPlayer);
+                newPlayer.setParent(current);
+            }else{
+                addWinner(current.getLeft(),newPlayer);
+            }
+        }else {
+            if(current.getRight()==null){
+                current.setRight(newPlayer);
+                newPlayer.setParent(current);
+            }else {
+                addWinner(current.getRight(),newPlayer);
+            }
+        }
 
     }
 
@@ -282,6 +366,20 @@ public class SnakesAndLaddersGame {
             //System.out.println("numero 2: "+current.getPosition());
             return search(current.getNext(),position);
         }
+    }
+    public Box search(String player){
+        return seacrh(board,player);
+    }
+
+    private  Box seacrh(Box current , String player){
+        if((current != null) && (current.getPlayer().contains(player))){
+            //System.out.println("numero 1 "+current.getPosition());
+            return current;
+        } else{
+            //System.out.println("numero 2: "+current.getPosition());
+            return seacrh(current.getNext(),player);
+        }
+
     }
 
     /**
@@ -488,7 +586,19 @@ public class SnakesAndLaddersGame {
 
     }
 
+    public int getCurrentPlayers() {
+        return currentPlayers;
+    }
 
-   // public String getPlayers(){ return  }
+    public void setCurrentPlayers(int currentPlayers) {
+        this.currentPlayers = currentPlayers;
+    }
 
+    public Player getFirts() {
+        return firts;
+    }
+
+    public void setFirts(Player firts) {
+        this.firts = firts;
+    }
 }

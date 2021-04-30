@@ -29,8 +29,6 @@ public class Main {
 
     /**
      * ¿Qué falta por hacer?:
-     *  TODO: Hacer la dinamica de avanza del juego (con los atributos de la clase box)
-     *  TODO: Hacer acciones con los saltos de linea por consola
      *  TODO: Hacer acciones de la entrada 'num' como dice el enunciado
      *  TODO: Hacer acciones de la entrada 'simul'
      *  TODO: Hacer acciones de la entrada 'menu'
