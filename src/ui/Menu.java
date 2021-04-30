@@ -79,9 +79,9 @@ public class Menu {
             System.out.println("It is "+current.getPlayer()+"'s turn");
             System.out.println("Please press intro:");
             String response = sc.nextLine();
-            System.out.println(current.getPlayer()+" got: "+dice);
             System.out.println("\n");
             if(response.equals("")){
+                System.out.println(current.getPlayer()+" got: "+dice);
                 if(game.move(current.getPlayer(),dice)){
                     System.out.println(seeBoard(game.getRows(), game.getColumns() , "2"));
                     System.out.println("\n");
