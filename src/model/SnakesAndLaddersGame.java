@@ -20,9 +20,6 @@ public class SnakesAndLaddersGame {
     private Player firts;
 
 
-
-    //TODO: hacer metodo para el avanze del juego - Camilo
-
     /**
      * Instantiates a new Snakes and ladders game.
      */
@@ -93,9 +90,19 @@ public class SnakesAndLaddersGame {
     public boolean move(String player , int dice ){
         Box boxPlayer = search(player);
         if(moveTo(boxPlayer,dice,player)){
+            int auxScore =0;
+            Player currentPLayer = searchPlayer(player);
+            auxScore = currentPLayer.getPlayerScore();
+            auxScore+=dice;
+            currentPLayer.setPlayerScore(auxScore);
             addWinner(player);
             return true;
         }else {
+            int auxScore =0;
+            Player currentPLayer = searchPlayer(player);
+            auxScore = currentPLayer.getPlayerScore();
+            auxScore+=dice;
+            currentPLayer.setPlayerScore(auxScore);
             String players;
             String aux;
             int playerToMove;
@@ -480,6 +487,18 @@ public class SnakesAndLaddersGame {
         }
     }
 
+    public Player searchPlayer(String playerAvatar){
+        return searchPlayer(firts,playerAvatar);
+    }
+
+    private Player searchPlayer(Player current , String playerAvatar){
+        if(current!=null && current.getPlayer().equals(playerAvatar)){
+            return current;
+        }else {
+            return searchPlayer(current.getNext() , playerAvatar);
+        }
+    }
+
     //Getters and Setters.
 
     public int getColumns() {
@@ -556,6 +575,19 @@ public class SnakesAndLaddersGame {
     public void setRootScore(Player rootPlayer) {
         this.rootPlayer = rootPlayer;
     }
+
+    //se les hace previous
+
+
+    //el que retorne se le hace .next
+    public Box getLastInRow(int columns, Box current){
+        if(columns!=0){
+            return getLastInRow(columns-1,current.getPrevious());
+        }else {
+            return current;
+        }
+    }
+
 
     public void printList(){
         System.out.println("Tamaño del tablero: "+boardSize);

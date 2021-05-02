@@ -8,6 +8,7 @@ public class Player {
     //Attributes.
     private int playerScore;
     private String player;
+    private String playerName;
 
     //Attributes para el arbol
     private Player left;
@@ -88,5 +89,11 @@ public class Player {
         this.parent = parent;
     }
 
+    public String getPlayerName() {
+        return playerName;
+    }
 
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
 }

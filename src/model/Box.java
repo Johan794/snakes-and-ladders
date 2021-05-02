@@ -3,7 +3,7 @@ package model;
 /**
  * The type Box.
  */
-public class Box {
+public class Box{
 
     //Attributes.
     private String player;
@@ -160,4 +160,6 @@ public class Box {
 
         return out;
     }
+
+
 }
