@@ -40,6 +40,7 @@ public class Menu {
                 break;
             case "2":
                 //mostrar los puntajes
+                game.inOrder();
                 myMenu();
                 break;
             case "3":

@@ -182,6 +182,32 @@ public class SnakesAndLaddersGame {
 
     }
 
+    /*public void printInOrder(){
+        if(rootPlayer.getLeft()!=null){
+            printInOrder();
+        }
+        System.out.println(rootPlayer.getPlayerScore());
+        if(rootPlayer.getRight()!=null){
+            printInOrder();
+        }
+    }*/
+
+    public void inOrder(){
+        printInOrder(rootPlayer);
+    }
+
+    private void printInOrder(Player NN){
+        if(rootPlayer != null){
+           if(rootPlayer.getLeft() != null){
+               printInOrder(rootPlayer.getLeft());
+           }
+            System.out.println(rootPlayer.getPlayerScore());
+            if(rootPlayer.getRight() != null){
+                printInOrder(rootPlayer.getRight());
+            }
+        }
+    }
+
     /**
      * Create board.
      *
