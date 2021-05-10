@@ -1,6 +1,5 @@
 package model;
 
-//Enumeration.
 public enum GameItem {
     HEAD,
     TAIL,

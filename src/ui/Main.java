@@ -7,7 +7,6 @@ package ui;
  * @version 1.0
  */
 public class Main {
-
     private Menu theMenu;
     public Main(){
         welcome();

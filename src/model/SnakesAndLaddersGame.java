@@ -13,6 +13,9 @@ public class SnakesAndLaddersGame {
     private int currentLadders;
     private int rows;
     private int columns;
+    /**
+     * The constant SNAKES.
+     */
     public static final String SNAKES = "ABCDEFGHIJHKLNOPQRSRWXYZ";
 
     private Player rootPlayer;
@@ -30,7 +33,7 @@ public class SnakesAndLaddersGame {
     /**
      * Add player.
      *
-     * @param element the element
+     * @param element the element which contains the symbol of the player
      */
     public void addPlayer(String element){
         Player p = new Player(element);
@@ -41,6 +44,14 @@ public class SnakesAndLaddersGame {
         }
     }
 
+
+    /**
+     * Adds the current amount of players to a linked list. <br>
+     *<b> pre: </b><br>
+     * <b> pos: </b><br>
+     * @param x the first player of the list
+     * @param y the new player that will be added
+     */
     private void addPlayer(Player x,Player y){
         if(x.getNext()==null){
             x.setNext(y);
@@ -52,12 +63,13 @@ public class SnakesAndLaddersGame {
 
 
     /**
-     * Start game.
-     *
-     * @param n       the n
-     * @param m       the m
-     * @param snakes  the snakes
-     * @param ladders the ladders
+     * Start game <br>.
+     * <b>pre: <b/>
+     * <b>pos: the main elements of the game are set up</b>
+     * @param n       the n rows
+     * @param m       the m columns
+     * @param snakes  the amount of snakes
+     * @param ladders the amount of ladders
      */
     public void startGame(int n , int m, int snakes, int ladders){
         setBoardSize(n*m);
@@ -78,6 +90,12 @@ public class SnakesAndLaddersGame {
 
     }
 
+    /**
+     * Set current players of the game in a linked list <br>.
+     *<b>pre: </b>
+     * <b>pos:</b>
+     * @param firts the first player of the list
+     */
     public void setCurrentPLayers(Player firts){
         if(firts!=null){
             String add = firts.getPlayer();
@@ -87,22 +105,19 @@ public class SnakesAndLaddersGame {
         }
     }
 
+    /**
+     * Moves the player around the board <br>
+     *<b>pre: the board must be set with all its elements</b><br>
+     *<b>pos: </b><br>
+     * @param player the  current player
+     * @param dice   the value of the dice
+     * @return boolean when it comes to the las box
+     */
     public boolean move(String player , int dice ){
         Box boxPlayer = search(player);
         if(moveTo(boxPlayer,dice,player)){
-            int auxScore =0;
-            Player currentPLayer = searchPlayer(player);
-            auxScore = currentPLayer.getPlayerScore();
-            auxScore+=dice;
-            currentPLayer.setPlayerScore(auxScore);
-            addWinner(player);
             return true;
         }else {
-            int auxScore =0;
-            Player currentPLayer = searchPlayer(player);
-            auxScore = currentPLayer.getPlayerScore();
-            auxScore+=dice;
-            currentPLayer.setPlayerScore(auxScore);
             String players;
             String aux;
             int playerToMove;
@@ -133,6 +148,15 @@ public class SnakesAndLaddersGame {
 
     }
 
+    /**
+     * Moves the player to an specific box.<br>
+     *<b>pre: </b><br>
+     * <b>pos: </b><br>
+     * @param boxPlayer     the box player
+     * @param to            the amount of boxes that the player will be moved to
+     * @param currentPlayer the current player
+     * @return boolean to confirm if the players was moved to the last box
+     */
     private boolean moveTo(Box boxPlayer , int to, String currentPlayer){
         String players;
         String aux;
@@ -156,12 +180,19 @@ public class SnakesAndLaddersGame {
 
     }
 
-    //lista enlazada de jugadores
-    public void addWinner(String player){
+    /**
+     * Adds winner player when it reaches the last box. <br>
+     *<b>pre: </b><br>
+     *<b>pos: </b><br>
+     * @param player      the symbol of the player
+     * @param playersName the players name
+     */
+    public void addWinner(String player, String playersName){
         int moves;
         Player newPLayer = new Player(player);
         moves = newPLayer.getPlayerScore();
         newPLayer.setPlayerScore(moves*boardSize);
+        newPLayer.setPlayerName(playersName);
         if (rootPlayer==null){
             rootPlayer = newPLayer;
         }else{
@@ -190,8 +221,9 @@ public class SnakesAndLaddersGame {
     }
 
     /**
-     * Create board.
-     *
+     * Creates the board for the current game.<br>
+     *<b>pre: </b><br>
+     *<b>pos: </b><br>
      * @param position the position
      */
     public void createBoard(int position){
@@ -224,8 +256,9 @@ public class SnakesAndLaddersGame {
     }
 
     /**
-     * Set snakes.
-     *
+     * Set  the snakes for the current game.<br>
+     *<b>pre: the board must be different of null</b><br>
+     * <b>pos: </b><br>
      * @param createdSnakes the created snakes
      */
     public void setSnakes(int createdSnakes){
@@ -238,6 +271,13 @@ public class SnakesAndLaddersGame {
 
     }
 
+    /**
+     * Set the head for a current snake.<br>
+     *<b>pre: the board must be different of null</b><br>
+     *<b>pos: </b><br>
+     * @param added       a sentinel to confirm if the action was made successfully
+     * @param headBorder the limit to create a head for an snake
+     */
     private void setHead(boolean added, int headBorder){
         if(!added){
             int position = (int)((Math.random())*boardSize)+1;
@@ -264,7 +304,15 @@ public class SnakesAndLaddersGame {
 
     }
 
-    private void setTail(boolean added, int border){
+
+    /**
+     * Set  the tail for a current snake.<br>
+     *<b>pre: the board must be different of null</b><br>
+     *<b>pos:</b><br>
+     * @param added  a sentinel to confirm if the action was made successfully
+     * @param border the limit to create a tail for an snake
+     */
+    public void setTail(boolean added, int border){
         if(!added){
             int position = (int)((Math.random())*border)+1;
             if(position>=border){
@@ -291,11 +339,11 @@ public class SnakesAndLaddersGame {
     }
 
     /**
-     * Set ladders.
-     *
+     * Set the ladders for the current game.<br>
+     *<b>pre: </b><br>
+     *<b>pos: </b><br>
      * @param createdLadders the created ladders
      */
-//separar el agregado de etiquetas
     public void setLadders(int createdLadders){
         if((currentLadders)!=createdLadders){
             setBase(false,(boardSize/2));
@@ -306,7 +354,13 @@ public class SnakesAndLaddersGame {
 
     }
 
-    private void setBase(boolean added, int border){
+    /**
+     * Set base.
+     *
+     * @param added  the added
+     * @param border the border
+     */
+    public void setBase(boolean added, int border){
         if(!added){
             int position = (int)((Math.random())*border)+1;
             //System.out.println("Numero generado: "+position);
@@ -330,6 +384,12 @@ public class SnakesAndLaddersGame {
         }
     }
 
+    /**
+     * Set top.
+     *
+     * @param added the added
+     * @param head  the head
+     */
     private void setTop(boolean added, int head){
         if(!added){
             int position = (int)((Math.random())*boardSize)+1;
@@ -374,6 +434,13 @@ public class SnakesAndLaddersGame {
             return search(current.getNext(),position);
         }
     }
+
+    /**
+     * Search box.
+     *
+     * @param player the player
+     * @return the box
+     */
     public Box search(String player){
         return seacrh(board,player);
     }
@@ -416,7 +483,7 @@ public class SnakesAndLaddersGame {
 
     }
 
-    //encuentra la primera cola de serpiente
+
     private Box findTail(Box board, boolean out){
         if(out!=true){
             if(board.getGameItem().equals(GameItem.TAIL) && board.getSnake()==null){
@@ -457,9 +524,6 @@ public class SnakesAndLaddersGame {
     }
 
 
-
-
-
     private Box findTop(Box current, boolean out){
         if(out!=true){
             if((current != null) && (current.getGameItem().equals(GameItem.TOP)) && current.getLadder()==null ){
@@ -487,149 +551,191 @@ public class SnakesAndLaddersGame {
         }
     }
 
-    public Player searchPlayer(String playerAvatar){
-        return searchPlayer(firts,playerAvatar);
-    }
-
-    private Player searchPlayer(Player current , String playerAvatar){
-        if(current!=null && current.getPlayer().equals(playerAvatar)){
-            return current;
-        }else {
-            return searchPlayer(current.getNext() , playerAvatar);
-        }
-    }
 
     //Getters and Setters.
 
+    /**
+     * Gets columns.
+     *
+     * @return the columns
+     */
     public int getColumns() {
         return columns;
     }
 
 
+    /**
+     * Sets columns.
+     *
+     * @param columns the columns
+     */
     public void setColumns(int columns) {
         this.columns = columns;
     }
 
 
+    /**
+     * Gets rows.
+     *
+     * @return the rows
+     */
     public int getRows() {
         return rows;
     }
 
 
+    /**
+     * Sets rows.
+     *
+     * @param rows the rows
+     */
     public void setRows(int rows) {
         this.rows = rows;
     }
 
 
+    /**
+     * Sets current snakes.
+     *
+     * @param currentSnakes the current snakes
+     */
     public void setCurrentSnakes(int currentSnakes) {
         this.currentSnakes = currentSnakes;
     }
 
 
+    /**
+     * Sets current ladders.
+     *
+     * @param currentLadders the current ladders
+     */
     public void setCurrentLadders(int currentLadders) {
         this.currentLadders = currentLadders;
     }
 
 
+    /**
+     * Sets board size.
+     *
+     * @param boardSize the board size
+     */
     public void setBoardSize(int boardSize) {
         this.boardSize = boardSize;
     }
 
 
+    /**
+     * Gets board.
+     *
+     * @return the board
+     */
     public Box getBoard() {
         return board;
     }
 
 
+    /**
+     * Gets board size.
+     *
+     * @return the board size
+     */
     public int getBoardSize() {
         return boardSize;
     }
 
 
+    /**
+     * Gets current snakes.
+     *
+     * @return the current snakes
+     */
     public int getCurrentSnakes() {
         return currentSnakes;
     }
 
 
+    /**
+     * Gets current ladders.
+     *
+     * @return the current ladders
+     */
     public int getCurrentLadders() {
         return currentLadders;
     }
 
 
+    /**
+     * Gets last box.
+     *
+     * @return the last box
+     */
     public Box getLastBox() {
       //  System.out.println(lastBox.getPosition());
         return lastBox;
     }
 
 
+    /**
+     * Set last box.
+     *
+     * @param lastBox the last box
+     */
     public void setLastBox(Box lastBox){
         this.lastBox = lastBox;
     }
 
 
+    /**
+     * Gets root score.
+     *
+     * @return the root score
+     */
     public Player getRootScore() {
         return rootPlayer;
     }
 
 
+    /**
+     * Sets root score.
+     *
+     * @param rootPlayer the root player
+     */
     public void setRootScore(Player rootPlayer) {
         this.rootPlayer = rootPlayer;
     }
 
-    //se les hace previous
-
-
-    //el que retorne se le hace .next
-    public Box getLastInRow(int columns, Box current){
-        if(columns!=0){
-            return getLastInRow(columns-1,current.getPrevious());
-        }else {
-            return current;
-        }
-    }
-
-
-    public void printList(){
-        System.out.println("Tamaño del tablero: "+boardSize);
-        if(board!=null){
-            if(board.getNext()!=null){
-                System.out.println("Numero: "+board.getPosition()+" Item: "+board.getGameItem());
-                Box next = board.getNext();
-                int i=1;
-                while (i<boardSize && next !=null){
-                    System.out.println("Numero: "+next.getPosition()+" Item: "+next.getGameItem());
-                    next = next.getNext();
-                }
-            }else{
-                System.out.println("Numero: "+board.getPosition()+" Item: "+board.getGameItem());
-            }
-
-        }
-
-    }
-
-    public void printListPLayer(){
-       Player recorrer = firts;
-        System.out.println();
-        while(recorrer!=null){
-            System.out.print("["+recorrer.getPlayer()+"]--->");
-            recorrer = recorrer.getNext();
-        }
-
-    }
-
+    /**
+     * Gets current players.
+     *
+     * @return the current players
+     */
     public int getCurrentPlayers() {
         return currentPlayers;
     }
 
+    /**
+     * Sets current players.
+     *
+     * @param currentPlayers the current players
+     */
     public void setCurrentPlayers(int currentPlayers) {
         this.currentPlayers = currentPlayers;
     }
 
+    /**
+     * Gets firts.
+     *
+     * @return the firts
+     */
     public Player getFirts() {
         return firts;
     }
 
+    /**
+     * Sets firts.
+     *
+     * @param firts the firts
+     */
     public void setFirts(Player firts) {
         this.firts = firts;
     }

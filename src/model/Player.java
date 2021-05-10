@@ -33,7 +33,6 @@ public class Player {
 
 
     public int getPlayerScore() {
-
         return playerScore;
     }
 
