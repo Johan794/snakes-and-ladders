@@ -135,12 +135,12 @@ public class Menu {
      * @param current        the current
      */
     public void moveSimul(int currentPlayers , Player current){
-        try {
-            Thread.sleep(2000);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
         if(currentPlayers!=0 && current!=null) {
+            try {
+                Thread.sleep(2000);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
             int dice = (int) (Math.random() * 6) + 1;
             System.out.println("It is " + current.getPlayer() + "'s turn");
             int releases =0;
