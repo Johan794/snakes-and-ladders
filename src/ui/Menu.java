@@ -39,10 +39,12 @@ public class Menu {
                 System.out.println("At the same line: ");
                 System.out.println("Example: 5 5 4 3 6");
                 playGame();
+                game.setFirts(null);
                 myMenu();
                 break;
             case "2":
-                //mostrar los puntajes
+                System.out.println(">>>>>>>>>>>>>>>> Leader board:");
+                game.inOrder();
                 myMenu();
                 break;
             case "3":
@@ -131,7 +133,7 @@ public class Menu {
 
     public void moveSimul(int currentPlayers , Player current){
         try {
-            Thread.sleep(2*1000);
+            Thread.sleep(2000);
         } catch (Exception e) {
             System.out.println(e);
         }

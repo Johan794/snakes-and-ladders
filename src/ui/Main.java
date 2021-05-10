@@ -28,8 +28,6 @@ public class Main {
 
     /**
      * ¿Qué falta por hacer?:
-     *  TODO: Hacer acciones de la entrada 'simul'
-     *  TODO: Imprimir los puntajess del arbol binario
      *  TODO: ESTE ES EL MÁS IMPORTANTE , PROBAR LAS COSAS Y SABER SI FUNCIONAN Y SI CUMPLEN LAS CONDICIONES DEL ENUNCIADO
      */
 

@@ -66,6 +66,7 @@ public class SnakesAndLaddersGame {
      * Start game <br>.
      * <b>pre: <b/>
      * <b>pos: the main elements of the game are set up</b>
+     *
      * @param n       the n rows
      * @param m       the m columns
      * @param snakes  the amount of snakes
@@ -92,8 +93,9 @@ public class SnakesAndLaddersGame {
 
     /**
      * Set current players of the game in a linked list <br>.
-     *<b>pre: </b>
+     * <b>pre: </b>
      * <b>pos:</b>
+     *
      * @param firts the first player of the list
      */
     public void setCurrentPLayers(Player firts){
@@ -107,8 +109,9 @@ public class SnakesAndLaddersGame {
 
     /**
      * Moves the player around the board <br>
-     *<b>pre: the board must be set with all its elements</b><br>
-     *<b>pos: </b><br>
+     * <b>pre: the board must be set with all its elements</b><br>
+     * <b>pos: </b><br>
+     *
      * @param player the  current player
      * @param dice   the value of the dice
      * @return boolean when it comes to the las box
@@ -182,14 +185,15 @@ public class SnakesAndLaddersGame {
 
     /**
      * Adds winner player when it reaches the last box. <br>
-     *<b>pre: </b><br>
-     *<b>pos: </b><br>
+     * <b>pre: </b><br>
+     * <b>pos: </b><br>
+     *
      * @param player      the symbol of the player
      * @param playersName the players name
      */
     public void addWinner(String player, String playersName){
         int moves;
-        Player newPLayer = new Player(player);
+        Player newPLayer = searchPlayer(player);
         moves = newPLayer.getPlayerScore();
         newPLayer.setPlayerScore(moves*boardSize);
         newPLayer.setPlayerName(playersName);
@@ -221,9 +225,56 @@ public class SnakesAndLaddersGame {
     }
 
     /**
+     * Search player player.
+     *
+     * @param player the player
+     * @return the player
+     */
+    public Player searchPlayer(String player){
+        return searchPlayer(firts,player);
+    }
+
+    private Player searchPlayer(Player current , String player) {
+        if(current!=null && current.getPlayer().equals(player)){
+            return current;
+        }else {
+            return searchPlayer(current.getNext(),player);
+        }
+    }
+    /*public void printInOrder(){
+        if(rootPlayer.getLeft()!=null){
+            printInOrder();
+        }
+        System.out.println(rootPlayer.getPlayerScore());
+        if(rootPlayer.getRight()!=null){
+            printInOrder();
+        }
+    }*/
+
+    /**
+     * In order.
+     */
+    public void inOrder(){
+        printInOrder(rootPlayer);
+    }
+
+    private void printInOrder(Player current){
+        if(current != null){
+           if(current.getLeft() != null){
+               printInOrder(current.getLeft());
+           }
+            System.out.println("Playe's name: "+current.getPlayerName()+"\n"+"Player's simbol: "+current.getPlayer()+"\n"+"Player's score: "+current.getPlayerScore());
+            if(current.getRight() != null){
+                printInOrder(current.getRight());
+            }
+        }
+    }
+
+    /**
      * Creates the board for the current game.<br>
-     *<b>pre: </b><br>
-     *<b>pos: </b><br>
+     * <b>pre: </b><br>
+     * <b>pos: </b><br>
+     *
      * @param position the position
      */
     public void createBoard(int position){
@@ -257,8 +308,9 @@ public class SnakesAndLaddersGame {
 
     /**
      * Set  the snakes for the current game.<br>
-     *<b>pre: the board must be different of null</b><br>
+     * <b>pre: the board must be different of null</b><br>
      * <b>pos: </b><br>
+     *
      * @param createdSnakes the created snakes
      */
     public void setSnakes(int createdSnakes){
@@ -307,8 +359,9 @@ public class SnakesAndLaddersGame {
 
     /**
      * Set  the tail for a current snake.<br>
-     *<b>pre: the board must be different of null</b><br>
-     *<b>pos:</b><br>
+     * <b>pre: the board must be different of null</b><br>
+     * <b>pos:</b><br>
+     *
      * @param added  a sentinel to confirm if the action was made successfully
      * @param border the limit to create a tail for an snake
      */
@@ -340,8 +393,9 @@ public class SnakesAndLaddersGame {
 
     /**
      * Set the ladders for the current game.<br>
-     *<b>pre: </b><br>
-     *<b>pos: </b><br>
+     * <b>pre: </b><br>
+     * <b>pos: </b><br>
+     *
      * @param createdLadders the created ladders
      */
     public void setLadders(int createdLadders){
