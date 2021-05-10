@@ -264,7 +264,8 @@ public class SnakesAndLaddersGame {
                printInOrder(current.getLeft());
            }
             System.out.println("Playe's name: "+current.getPlayerName()+"\n"+"Player's simbol: "+current.getPlayer()+"\n"+"Player's score: "+current.getPlayerScore());
-            if(current.getRight() != null){
+            System.out.println("\n");
+           if(current.getRight() != null){
                 printInOrder(current.getRight());
             }
         }
@@ -783,6 +784,10 @@ public class SnakesAndLaddersGame {
      */
     public Player getFirts() {
         return firts;
+    }
+
+    public void setBoard(Box board) {
+        this.board = board;
     }
 
     /**
