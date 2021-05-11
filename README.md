@@ -18,6 +18,9 @@
 8. If you are using **Eclipse IDE** and you have the problem above you can run the game wihtout IDE by using the folowing commands **javac -cp src /src/ui/Main.java -d bin** and then **java -cp bin ui.Main** **(We recomend using InteliJ IDEA 😎😉)** 
 9. Finally Have fun!! 😎
 
+## Documentation
+- **Here: [¡Link!](https://github.com/Johan794/snakes-and-ladders/blob/master/docs/Documentacion.pdf)** 📄
+
 ## Overview
 <h3> Main menu </h3>    
 
