@@ -13,6 +13,9 @@ public class SnakesAndLaddersGame {
     private int currentLadders;
     private int rows;
     private int columns;
+    private String currentGameInfo;
+
+
     /**
      * The constant SNAKES.
      */
@@ -27,7 +30,7 @@ public class SnakesAndLaddersGame {
      * Instantiates a new Snakes and ladders game.
      */
     public SnakesAndLaddersGame() {
-
+        currentGameInfo = "";
     }
 
     /**
@@ -194,6 +197,7 @@ public class SnakesAndLaddersGame {
     public void addWinner(String player, String playersName){
         int moves;
         Player newPLayer = searchPlayer(player);
+        newPLayer.setGameInfo(getCurrentGameInfo());
         moves = newPLayer.getPlayerScore();
         newPLayer.setPlayerScore(moves*boardSize);
         newPLayer.setPlayerName(playersName);
@@ -206,7 +210,7 @@ public class SnakesAndLaddersGame {
     }
 
     private void addWinner(Player current , Player newPlayer){
-        if(newPlayer.getPlayerScore()<=current.getPlayerScore()){
+        if(newPlayer.getPlayerScore()>=current.getPlayerScore()){
             if(current.getLeft()==null){
                 current.setLeft(newPlayer);
                 newPlayer.setParent(current);
@@ -259,12 +263,12 @@ public class SnakesAndLaddersGame {
     }
 
     private void printInOrder(Player current){
+
         if(current != null){
            if(current.getLeft() != null){
                printInOrder(current.getLeft());
            }
-            System.out.println("Playe's name: "+current.getPlayerName()+"\n"+"Player's simbol: "+current.getPlayer()+"\n"+"Player's score: "+current.getPlayerScore());
-            System.out.println("\n");
+            System.out.println("Playe's name: "+current.getPlayerName()+"\n"+"Player's simbol: "+current.getPlayer()+"\n"+"Player's score: "+current.getPlayerScore()+"\nGame information: "+current.getGameInfo());
            if(current.getRight() != null){
                 printInOrder(current.getRight());
             }
@@ -798,4 +802,28 @@ public class SnakesAndLaddersGame {
     public void setFirts(Player firts) {
         this.firts = firts;
     }
+
+    public String getCurrentGameInfo(){
+        currentGameInfo+="Rows:  "+rows+"\n";
+        currentGameInfo+= "Columns: "+columns+"\n";
+        currentGameInfo+="Snakes: "+currentSnakes+"\n";
+        currentGameInfo+="Ladders: "+currentLadders+"\n";
+        currentGameInfo+= "Players symbols: "+getGameSymbols()+"\n";
+
+        return currentGameInfo;
+    }
+
+    public  String getGameSymbols(){
+        return getGameSymbols(firts,"");
+    }
+
+    private String getGameSymbols(Player current , String out){
+        if(current==null){
+            return out;
+        }else {
+            out+=current.getPlayer()+" ";
+            return getGameSymbols(current.getNext(),out);
+        }
+    }
+
 }

@@ -9,6 +9,8 @@ public class Player {
     private int playerScore;
     private String player;
     private String playerName;
+    private String gameInfo;
+
 
     //Attributes para el arbol
     private Player left;
@@ -29,8 +31,8 @@ public class Player {
         this.player = player;
     }
 
-    //Getters ans Setters
 
+    //Getters ans Setters
 
     public int getPlayerScore() {
         return playerScore;
@@ -94,5 +96,13 @@ public class Player {
 
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
+    }
+
+    public String getGameInfo() {
+        return gameInfo;
+    }
+
+    public void setGameInfo(String gameInfo) {
+        this.gameInfo = gameInfo;
     }
 }
